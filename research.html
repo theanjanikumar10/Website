@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research — Electrical Machines Laboratory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#FAFAFA;color:#111827;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;font-family:inherit}
+
+/* ============================================================
+   LAYOUT
+============================================================ */
+.container{max-width:1400px;margin:0 auto;padding:0 48px}
+.section-pad{padding-top:96px;padding-bottom:96px}
+.section-eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#D97706;margin-bottom:16px}
+.section-title{font-size:36px;font-weight:800;color:#111827;line-height:1.15;margin-bottom:16px;letter-spacing:-.02em}
+.section-sub{font-size:17px;color:#475569;max-width:560px;line-height:1.65}
+.section-header{margin-bottom:64px}
+
+/* ============================================================
+   NAVIGATION
+============================================================ */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:80px;background:rgba(250,250,250,.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s;display:flex;align-items:center}
+#navbar.scrolled{border-bottom-color:#E5E7EB;box-shadow:0 1px 16px rgba(0,0,0,.07)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1400px;margin:0 auto;padding:0 48px}
+.nav-logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:15px;color:#111827;flex-shrink:0}
+.nav-logo svg{flex-shrink:0}
+.nav-logo span{line-height:1.2}
+.lab-abbr{color:#D97706;display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:14px;font-weight:500;color:#475569;transition:color .2s;letter-spacing:.01em}
+.nav-links a:hover{color:#111827}
+.nav-links a.active{color:#D97706;font-weight:700}
+.nav-cta{display:inline-flex;align-items:center;gap:8px;background:#D97706;color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:6px;border:none;transition:background .2s;letter-spacing:.01em}
+.nav-cta:hover{background:#B45309}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:8px;cursor:pointer}
+.hamburger span{display:block;width:24px;height:2px;background:#111827;transition:all .3s}
+.mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(250,250,250,.98);backdrop-filter:blur(10px);border-bottom:1px solid #E5E7EB;z-index:999;padding:24px 48px;flex-direction:column;gap:16px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:15px;font-weight:500;color:#475569;padding:8px 0;border-bottom:1px solid #F4F4F5}
+.mobile-menu a:hover,.mobile-menu a.active{color:#D97706}
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+.btn-filled{display:inline-flex;align-items:center;gap:8px;background:#D97706;color:#fff;font-size:15px;font-weight:600;padding:14px 28px;border-radius:6px;border:none;transition:background .2s,transform .15s;letter-spacing:.01em}
+.btn-filled:hover{background:#B45309;transform:translateY(-1px)}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#E2E8F0;font-size:15px;font-weight:600;padding:14px 28px;border-radius:6px;border:1px solid rgba(226,232,240,.35);transition:border-color .2s,color .2s,transform .15s;letter-spacing:.01em}
+.btn-outline:hover{border-color:rgba(226,232,240,.7);color:#fff;transform:translateY(-1px)}
+.btn-light{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#111827;font-size:14px;font-weight:600;padding:10px 20px;border-radius:6px;border:1px solid #E5E7EB;transition:border-color .2s,background .2s}
+.btn-light:hover{border-color:#D97706;background:#FEF3C7}
+
+/* ============================================================
+   BREADCRUMB
+============================================================ */
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:#64748B;margin-bottom:24px}
+.breadcrumb a{color:#64748B;transition:color .2s}
+.breadcrumb a:hover{color:#D97706}
+.breadcrumb-sep{color:#334155}
+.breadcrumb span{color:#D97706;font-weight:600}
+
+/* ============================================================
+   HERO
+============================================================ */
+#research-hero{min-height:75vh;background:#0F172A;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:80px}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:48px 48px}
+.hero-flux-bg{position:absolute;inset:0;opacity:.02;pointer-events:none}
+.hero-inner{display:grid;grid-template-columns:60% 40%;align-items:center;gap:64px;max-width:1400px;margin:0 auto;padding:80px 48px;position:relative;z-index:2}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#D97706;margin-bottom:28px}
+.hero-eyebrow::before{content:'';display:block;width:40px;height:1px;background:#D97706}
+.hero-headline{font-size:clamp(40px,5vw,72px);font-weight:800;color:#F8FAFC;line-height:1.05;letter-spacing:-.02em;margin-bottom:24px}
+.hero-headline em{font-style:normal;color:#D97706}
+.hero-sub{font-size:17px;color:#94A3B8;max-width:520px;line-height:1.7;margin-bottom:40px}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.hero-right-vis{display:flex;align-items:center;justify-content:center}
+
+/* Transformer SVG canvas */
+#transformer-canvas{display:block;max-width:100%}
+
+/* ============================================================
+   RESEARCH OVERVIEW
+============================================================ */
+#overview{background:#fff}
+.overview-content{max-width:900px}
+.overview-body{font-size:16px;color:#374151;line-height:1.85;margin-bottom:20px}
+.overview-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:56px;padding-top:56px;border-top:1px solid #E5E7EB}
+.ostat{text-align:center}
+.ostat-num{font-size:44px;font-weight:800;color:#111827;letter-spacing:-.04em;line-height:1;margin-bottom:6px}
+.ostat-accent{color:#D97706}
+.ostat-div{width:28px;height:2px;background:#D97706;margin:10px auto}
+.ostat-label{font-size:12px;font-weight:600;color:#6B7280;letter-spacing:.04em;text-transform:uppercase;line-height:1.4}
+
+/* ============================================================
+   RESEARCH DOMAINS
+============================================================ */
+#domains{background:#F4F4F5}
+.domains-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.domain-card{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:32px;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden;cursor:default}
+.domain-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:#D97706;transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.domain-card:hover{transform:translateY(-8px);box-shadow:0 16px 48px rgba(0,0,0,.08)}
+.domain-card:hover::after{transform:scaleX(1)}
+.domain-icon{width:44px;height:44px;color:#D97706;margin-bottom:20px}
+.domain-title{font-size:17px;font-weight:700;color:#111827;margin-bottom:12px;letter-spacing:-.01em}
+.domain-topics{display:flex;flex-direction:column;gap:7px}
+.domain-topic{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#475569;line-height:1.4}
+.domain-dot{width:5px;height:5px;background:#D97706;border-radius:50%;flex-shrink:0;margin-top:5px}
+
+/* ============================================================
+   FEATURED RESEARCH AREAS (alternating)
+============================================================ */
+#featured{background:#fff}
+.featured-block{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:80px 0;border-bottom:1px solid #E5E7EB}
+.featured-block:first-child{padding-top:0}
+.featured-block:last-child{border-bottom:none;padding-bottom:0}
+.featured-block.reverse{direction:rtl}
+.featured-block.reverse > *{direction:ltr}
+.featured-vis{border-radius:12px;overflow:hidden;background:#0F172A}
+.featured-vis svg{width:100%;height:100%;display:block}
+.featured-content{}
+.featured-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#D97706;margin-bottom:12px}
+.featured-title{font-size:26px;font-weight:800;color:#111827;line-height:1.2;letter-spacing:-.02em;margin-bottom:16px}
+.featured-desc{font-size:15px;color:#475569;line-height:1.8;margin-bottom:24px}
+.featured-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.featured-meta-item{}
+.fmi-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94A3B8;margin-bottom:4px}
+.fmi-val{font-size:13px;color:#374151;font-weight:500;line-height:1.5}
+.featured-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.ftag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid #E5E7EB;color:#475569}
+.featured-outputs{font-size:13px;color:#6B7280;line-height:1.6}
+.featured-outputs strong{color:#D97706;font-weight:700}
+
+/* ============================================================
+   ONGOING PROJECTS
+============================================================ */
+#ongoing{background:#F4F4F5}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:48px}
+.filter-btn{font-size:13px;font-weight:600;color:#6B7280;padding:8px 18px;border-radius:20px;border:1px solid #E5E7EB;background:#fff;transition:all .2s;cursor:pointer}
+.filter-btn.active,.filter-btn:hover{background:#D97706;color:#fff;border-color:#D97706}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.project-card{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:28px;transition:transform .25s,box-shadow .25s}
+.project-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+.project-card.hidden{display:none}
+.project-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:12px;margin-bottom:14px}
+.badge-ongoing{background:#DCFCE7;color:#15803D}
+.badge-sponsored{background:#FEF3C7;color:#B45309}
+.badge-collaborative{background:#DBEAFE;color:#1D4ED8}
+.project-title{font-size:15px;font-weight:700;color:#111827;margin-bottom:8px;line-height:1.4}
+.project-agency{font-size:12px;color:#D97706;font-weight:600;margin-bottom:10px}
+.project-meta{display:flex;flex-direction:column;gap:5px;margin-bottom:16px}
+.pmeta-row{display:flex;gap:8px;font-size:12px;color:#6B7280}
+.pmeta-key{font-weight:600;color:#374151;min-width:36px}
+.project-area-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:3px;background:#F4F4F5;color:#475569;border:1px solid #E5E7EB}
+.project-pi{font-size:12px;color:#6B7280;margin-top:12px;padding-top:12px;border-top:1px solid #F4F4F5}
+.project-pi strong{color:#111827}
+
+/* ============================================================
+   COMPLETED PROJECTS
+============================================================ */
+#completed{background:#fff}
+.completed-timeline{position:relative;max-width:900px}
+.completed-timeline::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:2px;background:#E5E7EB}
+.ct-item{position:relative;padding:0 0 40px 44px;transition:opacity .2s}
+.ct-item::before{content:'';position:absolute;left:-5px;top:4px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #D97706;transition:background .25s,transform .25s}
+.ct-item:hover::before{background:#D97706;transform:scale(1.3)}
+.ct-item:hover .ct-box{border-color:#D97706}
+.ct-date{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#D97706;margin-bottom:6px}
+.ct-box{background:#FAFAFA;border:1px solid #E5E7EB;border-radius:10px;padding:22px 26px;transition:border-color .25s}
+.ct-title{font-size:16px;font-weight:700;color:#111827;margin-bottom:6px;letter-spacing:-.01em}
+.ct-outcomes{font-size:13px;color:#475569;line-height:1.65;margin-bottom:10px}
+.ct-pills{display:flex;flex-wrap:wrap;gap:6px}
+.ct-pill{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:3px}
+.ct-pill-pub{background:#EFF6FF;color:#1D4ED8}
+.ct-pill-impact{background:#ECFDF5;color:#15803D}
+
+/* ============================================================
+   PUBLICATIONS
+============================================================ */
+#publications{background:#fff;padding-top:0}
+.pub-controls{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:40px;align-items:center}
+.pub-search{position:relative;flex:1;min-width:220px}
+.pub-search input{width:100%;padding:10px 16px 10px 40px;border:1px solid #E5E7EB;border-radius:8px;font-size:14px;font-family:inherit;color:#111827;background:#fff;outline:none;transition:border-color .2s}
+.pub-search input:focus{border-color:#D97706}
+.pub-search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#94A3B8;pointer-events:none}
+.pub-filters{display:flex;flex-wrap:wrap;gap:8px}
+.pub-filter{font-size:12px;font-weight:600;padding:8px 14px;border:1px solid #E5E7EB;border-radius:6px;background:#fff;color:#475569;cursor:pointer;transition:all .2s}
+.pub-filter.active,.pub-filter:hover{border-color:#D97706;color:#D97706;background:#FEF3C7}
+.pub-table-wrap{overflow-x:auto}
+.pub-table{width:100%;border-collapse:collapse}
+.pub-table thead th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94A3B8;padding:14px 16px;border-bottom:1px solid #E5E7EB;white-space:nowrap}
+.pub-table tbody tr{border-bottom:1px solid #F4F4F5;transition:background .15s}
+.pub-table tbody tr:hover{background:#F8FAFC}
+.pub-table tbody tr.pub-hidden{display:none}
+.pub-table td{padding:16px 16px;font-size:13px;vertical-align:top}
+.pub-year{font-weight:700;color:#D97706;white-space:nowrap;width:52px}
+.pub-title-cell{font-weight:600;color:#111827;line-height:1.45;max-width:340px}
+.pub-authors{color:#6B7280;line-height:1.5;max-width:200px}
+.pub-venue{font-style:italic;color:#6B7280;max-width:160px;line-height:1.4}
+.pub-type-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.pb-journal{background:#EFF6FF;color:#1D4ED8}
+.pb-conference{background:#FEF3C7;color:#B45309}
+.pb-patent{background:#F0FDF4;color:#15803D}
+.pb-book{background:#F5F3FF;color:#7C3AED}
+.pub-actions{display:flex;gap:6px;white-space:nowrap}
+.pub-action-btn{font-size:11px;font-weight:600;padding:4px 10px;border:1px solid #E5E7EB;border-radius:4px;background:#fff;color:#475569;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:4px}
+.pub-action-btn:hover{border-color:#D97706;color:#D97706}
+.pub-count{font-size:13px;color:#6B7280;margin-bottom:12px}
+
+/* ============================================================
+   RESEARCH IMPACT
+============================================================ */
+#impact{background:#F4F4F5}
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:56px}
+.impact-card{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:32px 28px;text-align:center}
+.impact-num{font-size:52px;font-weight:800;color:#111827;letter-spacing:-.04em;line-height:1;margin-bottom:6px}
+.impact-accent{color:#D97706}
+.impact-div{width:28px;height:2px;background:#D97706;margin:12px auto}
+.impact-label{font-size:13px;font-weight:600;color:#6B7280;letter-spacing:.04em;text-transform:uppercase;line-height:1.4}
+.impact-statement{max-width:800px;background:#fff;border-left:4px solid #D97706;border-radius:0 8px 8px 0;padding:28px 32px}
+.impact-stmt-text{font-size:17px;color:#1E293B;line-height:1.75;font-style:italic}
+
+/* ============================================================
+   COLLABORATIONS
+============================================================ */
+#collaborations{background:#fff}
+.collab-layout{display:grid;grid-template-columns:1fr 420px;gap:64px;align-items:start}
+.collab-cats{display:flex;flex-direction:column;gap:32px}
+.collab-cat-title{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#D97706;margin-bottom:14px}
+.collab-logos{display:flex;flex-wrap:wrap;gap:12px}
+.collab-logo-item{border:1px solid #E5E7EB;border-radius:8px;padding:14px 18px;display:flex;align-items:center;justify-content:center;filter:grayscale(1);opacity:.55;transition:filter .3s,opacity .3s,transform .3s;cursor:default;min-width:100px}
+.collab-logo-item:hover{filter:grayscale(0);opacity:1;transform:scale(1.03)}
+.collab-logo-text{font-size:13px;font-weight:800;color:#111827;text-align:center;line-height:1.2}
+.collab-logo-text small{display:block;font-size:9px;font-weight:500;color:#6B7280;letter-spacing:.05em;text-transform:uppercase;margin-top:2px}
+.collab-map-wrap{position:sticky;top:104px}
+.collab-map-wrap svg{width:100%;height:auto}
+
+/* ============================================================
+   RESEARCH OPPORTUNITIES
+============================================================ */
+#opportunities{background:#0F172A;padding-top:96px;padding-bottom:96px;position:relative;overflow:hidden}
+.opp-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px}
+.opp-bg-vis{position:absolute;right:0;top:0;bottom:0;width:45%;opacity:.07;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.opp-inner{position:relative;z-index:2}
+.opp-header{text-align:center;margin-bottom:64px}
+.opp-headline{font-size:clamp(28px,3.5vw,44px);font-weight:800;color:#F8FAFC;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px}
+.opp-sub{font-size:16px;color:#94A3B8;line-height:1.65;max-width:560px;margin:0 auto}
+.opp-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.opp-card{background:#1E293B;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:32px;transition:transform .25s,background .25s}
+.opp-card:hover{transform:translateY(-6px);background:#243044}
+.opp-card-icon{width:40px;height:40px;color:#D97706;margin-bottom:20px}
+.opp-card-title{font-size:18px;font-weight:700;color:#F8FAFC;margin-bottom:10px;letter-spacing:-.01em}
+.opp-card-eligibility{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#D97706;margin-bottom:12px}
+.opp-card-areas{font-size:13px;color:#94A3B8;line-height:1.6;margin-bottom:20px}
+.opp-card-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#D97706;transition:gap .2s}
+.opp-card-link:hover{gap:10px}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer{background:#111827;color:#D1D5DB;padding:64px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand{max-width:300px}
+.footer-logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:15px;color:#F9FAFB;margin-bottom:16px}
+.footer-tagline{font-size:14px;color:#6B7280;line-height:1.65;margin-bottom:24px}
+.footer-contact p{font-size:13px;color:#9CA3AF;line-height:1.8}
+.footer-heading{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#F9FAFB;margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:14px;color:#9CA3AF;transition:color .2s}
+.footer-links a:hover{color:#D97706}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-copy{font-size:13px;color:#6B7280}
+.social-icons{display:flex;gap:16px}
+.social-icons a{width:36px;height:36px;border:1px solid rgba(255,255,255,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#9CA3AF;transition:border-color .2s,color .2s}
+.social-icons a:hover{border-color:#D97706;color:#D97706}
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ============================================================
+   FOCUS / A11Y
+============================================================ */
+:focus-visible{outline:2px solid #D97706;outline-offset:3px;border-radius:3px}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:1200px){
+  .collab-layout{grid-template-columns:1fr}
+  .collab-map-wrap{display:none}
+  .impact-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:992px){
+  .container,.nav-inner{padding:0 32px}
+  .hero-inner{grid-template-columns:1fr;padding:64px 32px}
+  .hero-right-vis{display:none}
+  .domains-grid{grid-template-columns:repeat(2,1fr)}
+  .featured-block{grid-template-columns:1fr;gap:40px}
+  .featured-block.reverse{direction:ltr}
+  .projects-grid{grid-template-columns:repeat(2,1fr)}
+  .opp-cards{grid-template-columns:repeat(2,1fr)}
+  .overview-stats{grid-template-columns:repeat(2,1fr)}
+  .impact-grid{grid-template-columns:repeat(2,1fr)}
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .mobile-menu{padding:16px 32px}
+}
+@media(max-width:768px){
+  .section-pad{padding-top:64px;padding-bottom:64px}
+  .section-title{font-size:28px}
+  .container,.nav-inner{padding:0 24px}
+  .domains-grid{grid-template-columns:1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .opp-cards{grid-template-columns:1fr}
+  .overview-stats{grid-template-columns:repeat(2,1fr)}
+  .impact-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr}
+  .pub-controls{flex-direction:column;align-items:stretch}
+  .pub-search{min-width:unset}
+  .mobile-menu{padding:16px 24px}
+  .featured-meta{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .hero-headline{font-size:36px}
+  .hero-btns{flex-direction:column}
+  .overview-stats{grid-template-columns:1fr}
+  .impact-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+<nav id="navbar" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Electrical Machines Laboratory Home">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <circle cx="18" cy="18" r="16" stroke="#D97706" stroke-width="1.5" fill="none"/>
+        <circle cx="18" cy="18" r="10" stroke="#D97706" stroke-width="1" fill="none" stroke-dasharray="3 3"/>
+        <circle cx="18" cy="18" r="4" fill="#D97706"/>
+        <line x1="18" y1="2" x2="18" y2="8" stroke="#D97706" stroke-width="1.5"/>
+        <line x1="18" y1="28" x2="18" y2="34" stroke="#D97706" stroke-width="1.5"/>
+        <line x1="2" y1="18" x2="8" y2="18" stroke="#D97706" stroke-width="1.5"/>
+        <line x1="28" y1="18" x2="34" y2="18" stroke="#D97706" stroke-width="1.5"/>
+      </svg>
+      <span>Electrical Machines<br><span class="lab-abbr">Research Laboratory</span></span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="index.html#news">Blog</a></li>
+      <li><a href="index.html#footer">Contact</a></li>
+    </ul>
+    <a href="#publications" class="nav-cta">
+      Explore Publications
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="index.html#news">Blog</a></li>
+      <li><a href="index.html#footer">Contact</a></li>
+  <a href="#publications" class="nav-cta" style="margin-top:8px;justify-content:center;">Explore Publications</a>
+</div>
+
+<!-- ============================================================
+     RESEARCH HERO
+============================================================ -->
+<section id="research-hero" aria-label="Research page hero">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+
+  <!-- Subtle flux ellipses background -->
+  <svg class="hero-flux-bg" viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+    <g stroke="white" stroke-width="0.5" fill="none">
+      <ellipse cx="700" cy="350" rx="580" ry="240"/>
+      <ellipse cx="700" cy="350" rx="460" ry="185"/>
+      <ellipse cx="700" cy="350" rx="340" ry="130"/>
+      <ellipse cx="700" cy="350" rx="220" ry="80"/>
+    </g>
+  </svg>
+
+  <div class="hero-inner">
+    <!-- Left -->
+    <div>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <span>Research</span>
+      </nav>
+      <div class="hero-eyebrow">Electrical Machines Laboratory</div>
+      <h1 class="hero-headline">
+        Research &amp;<br><em>Scholarship</em>
+      </h1>
+      <p class="hero-sub">
+        Advancing knowledge in electrical machines, motor drives, diagnostics, energy conversion, and sustainable electrification through rigorous experimental and computational methods.
+      </p>
+      <div class="hero-btns">
+        <a href="#domains" class="btn-filled">
+          Research Areas
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#publications" class="btn-outline">Publications</a>
+      </div>
+    </div>
+
+    <!-- Right: Transformer SVG Illustration -->
+    <div class="hero-right-vis" aria-label="Three-phase core-type transformer engineering illustration">
+      <canvas id="transformer-canvas" width="400" height="420" role="img" aria-label="Animated three-phase transformer cross-section with flux paths"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESEARCH OVERVIEW
+============================================================ -->
+<section id="overview" class="section-pad">
+  <div class="container">
+    <div class="overview-content reveal">
+      <span class="section-eyebrow">Our Approach</span>
+      <h2 class="section-title">Research at the Electrical Machines Laboratory</h2>
+      <p class="overview-body">
+        Research at the Electrical Machines Laboratory is grounded in a simple conviction: the most valuable engineering knowledge comes from the tension between mathematical models and physical experiments. We build theoretical frameworks, validate them rigorously on laboratory hardware, and calibrate them against real machine behaviour.
+      </p>
+      <p class="overview-body">
+        Our problem-driven approach begins with challenges that industry practitioners and infrastructure operators face — motors that fail unexpectedly, drives that operate inefficiently, generators that do not integrate cleanly with renewable-heavy grids. We work backward from those problems to the fundamental electromagnetic, thermal, and mechanical phenomena that govern them.
+      </p>
+      <p class="overview-body">
+        The laboratory maintains simultaneous research programmes across six core domains, with ongoing projects funded by national agencies including DST-SERB and AICTE, and through sponsored research agreements with industrial partners. Every project involves both faculty research leadership and active participation by doctoral and postgraduate students, ensuring that research productivity and research education reinforce one another.
+      </p>
+
+      <div class="overview-stats">
+        <div class="ostat">
+          <div class="ostat-num" data-target="6" data-suffix=""><span class="ostat-accent">6</span></div>
+          <div class="ostat-div"></div>
+          <div class="ostat-label">Research Domains</div>
+        </div>
+        <div class="ostat">
+          <div class="ostat-num" data-target="20" data-suffix="+">0+</div>
+          <div class="ostat-div"></div>
+          <div class="ostat-label">Active Projects</div>
+        </div>
+        <div class="ostat">
+          <div class="ostat-num" data-target="15" data-suffix="+">0+</div>
+          <div class="ostat-div"></div>
+          <div class="ostat-label">Publications</div>
+        </div>
+        <div class="ostat">
+          <div class="ostat-num" data-target="10" data-suffix="+">0+</div>
+          <div class="ostat-div"></div>
+          <div class="ostat-label">Collaborations</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESEARCH DOMAINS
+============================================================ -->
+<section id="domains" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Core Investigations</span>
+      <h2 class="section-title">Research Areas</h2>
+      <p class="section-sub">Six core domains of investigation spanning machine design, control, diagnostics, and sustainable energy systems.</p>
+    </div>
+    <div class="domains-grid">
+
+      <article class="domain-card reveal">
+        <svg class="domain-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="22" cy="22" r="16" stroke-dasharray="5 3"/>
+          <circle cx="22" cy="22" r="9"/>
+          <circle cx="22" cy="22" r="3.5" fill="currentColor" stroke="none"/>
+          <line x1="22" y1="6" x2="22" y2="13"/>
+          <line x1="22" y1="31" x2="22" y2="38"/>
+          <line x1="6" y1="22" x2="13" y2="22"/>
+          <line x1="31" y1="22" x2="38" y2="22"/>
+        </svg>
+        <h3 class="domain-title">Electric Machine Design</h3>
+        <div class="domain-topics">
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Electromagnetic optimisation via FEM and analytical modelling</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>High-efficiency induction and synchronous machine design</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Thermal analysis and cooling system design</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Rotor geometry and stator slot shape optimisation</div>
+        </div>
+      </article>
+
+      <article class="domain-card reveal" style="transition-delay:.07s">
+        <svg class="domain-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="22" cy="22" r="14"/>
+          <path d="M22 8v4M22 32v4M8 22h4M32 22h4"/>
+          <path d="M13 13l3 3M28 28l3 3M13 31l3-3M28 16l3-3"/>
+          <circle cx="22" cy="22" r="5" fill="currentColor" stroke="none" opacity=".3"/>
+        </svg>
+        <h3 class="domain-title">Special Electrical Machines</h3>
+        <div class="domain-topics">
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Permanent Magnet Synchronous Machines (PMSM / IPMSM)</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Brushless DC (BLDC) motor design and drive</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Switched Reluctance Machines (SRM) — design and control</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Axial flux and transverse flux machine topologies</div>
+        </div>
+      </article>
+
+      <article class="domain-card reveal" style="transition-delay:.14s">
+        <svg class="domain-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="6" y="10" width="32" height="22" rx="2"/>
+          <polyline points="10,26 14,18 19,22 24,14 29,20 34,16" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="6" y1="36" x2="38" y2="36"/>
+          <line x1="16" y1="32" x2="16" y2="36"/>
+          <line x1="28" y1="32" x2="28" y2="36"/>
+        </svg>
+        <h3 class="domain-title">Condition Monitoring</h3>
+        <div class="domain-topics">
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Motor Current Signature Analysis (MCSA) for fault detection</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Bearing, rotor bar, and winding insulation fault diagnosis</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Vibration-based signal analysis and classification</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>ML and deep-learning-based predictive maintenance</div>
+        </div>
+      </article>
+
+      <article class="domain-card reveal" style="transition-delay:.21s">
+        <svg class="domain-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 22L14 12L22 22L30 8L38 22" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="6" y1="36" x2="38" y2="36"/>
+          <line x1="6" y1="22" x2="6" y2="36"/>
+          <line x1="38" y1="22" x2="38" y2="36"/>
+          <circle cx="22" cy="22" r="2.5" fill="currentColor" stroke="none"/>
+        </svg>
+        <h3 class="domain-title">Motor Drives &amp; Control</h3>
+        <div class="domain-topics">
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Field-Oriented Control (FOC) and Direct Torque Control (DTC)</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Model Predictive Control (MPC) for variable-speed drives</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Sensorless speed and position estimation</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Adaptive and robust control under parameter variations</div>
+        </div>
+      </article>
+
+      <article class="domain-card reveal" style="transition-delay:.28s">
+        <svg class="domain-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="5" y="14" width="14" height="16" rx="2"/>
+          <rect x="25" y="14" width="14" height="16" rx="2"/>
+          <line x1="19" y1="18" x2="25" y2="18"/>
+          <line x1="19" y1="26" x2="25" y2="26"/>
+          <line x1="22" y1="18" x2="22" y2="26"/>
+          <line x1="2" y1="22" x2="5" y2="22"/>
+          <line x1="39" y1="22" x2="42" y2="22"/>
+          <circle cx="22" cy="8" r="2.5"/><circle cx="22" cy="36" r="2.5"/>
+          <line x1="22" y1="10.5" x2="22" y2="14"/>
+          <line x1="22" y1="30" x2="22" y2="33.5"/>
+        </svg>
+        <h3 class="domain-title">Power Electronics</h3>
+        <div class="domain-topics">
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Wide-bandgap devices: SiC and GaN converter design</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Multilevel inverter topologies — NPC and cascaded H-bridge</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>EMI characterisation and mitigation strategies</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>High-frequency DC-DC converter design for EV chargers</div>
+        </div>
+      </article>
+
+      <article class="domain-card reveal" style="transition-delay:.35s">
+        <svg class="domain-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="22" cy="22" r="6"/>
+          <line x1="22" y1="4" x2="22" y2="11"/>
+          <line x1="22" y1="33" x2="22" y2="40"/>
+          <line x1="4" y1="22" x2="11" y2="22"/>
+          <line x1="33" y1="22" x2="40" y2="22"/>
+          <line x1="9" y1="9" x2="14" y2="14"/>
+          <line x1="30" y1="30" x2="35" y2="35"/>
+          <line x1="35" y1="9" x2="30" y2="14"/>
+          <line x1="14" y1="30" x2="9" y2="35"/>
+          <path d="M17 28 Q14 16 22 14 Q30 12 28 28" fill="currentColor" fill-opacity=".12" stroke="currentColor"/>
+        </svg>
+        <h3 class="domain-title">Sustainable Electrification</h3>
+        <div class="domain-topics">
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>EV traction motor and drivetrain optimisation</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Regenerative braking and battery-motor co-optimisation</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>DFIG and PMSG-based wind energy systems</div>
+          <div class="domain-topic"><span class="domain-dot" aria-hidden="true"></span>Microgrid stability and smart grid integration</div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURED RESEARCH AREAS
+============================================================ -->
+<section id="featured" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Deep Dives</span>
+      <h2 class="section-title">Featured Research Areas</h2>
+      <p class="section-sub">Major investigations currently shaping the laboratory's research agenda.</p>
+    </div>
+
+    <!-- Block 1: FEM-based Machine Design -->
+    <div class="featured-block reveal">
+      <div class="featured-vis" style="aspect-ratio:4/3">
+        <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" aria-label="FEM flux density contour map">
+          <rect width="480" height="360" fill="#0F172A"/>
+          <g stroke="#1E293B" stroke-width="0.5" opacity="0.7">
+            <line x1="0" y1="60" x2="480" y2="60"/><line x1="0" y1="120" x2="480" y2="120"/>
+            <line x1="0" y1="180" x2="480" y2="180"/><line x1="0" y1="240" x2="480" y2="240"/>
+            <line x1="0" y1="300" x2="480" y2="300"/>
+            <line x1="80" y1="0" x2="80" y2="360"/><line x1="160" y1="0" x2="160" y2="360"/>
+            <line x1="240" y1="0" x2="240" y2="360"/><line x1="320" y1="0" x2="320" y2="360"/>
+            <line x1="400" y1="0" x2="400" y2="360"/>
+          </g>
+          <!-- FEM contour rings -->
+          <g transform="translate(240 180)" opacity=".85">
+            <circle r="140" fill="none" stroke="#1E3A5F" stroke-width="8"/>
+            <circle r="120" fill="none" stroke="#1E4A7F" stroke-width="6"/>
+            <circle r="100" fill="none" stroke="#1A5C9A" stroke-width="5"/>
+            <circle r="80" fill="none" stroke="#B45309" stroke-width="4"/>
+            <circle r="60" fill="none" stroke="#D97706" stroke-width="4"/>
+            <circle r="42" fill="#1E3A5F" stroke="#60A5FA" stroke-width="2"/>
+            <circle r="24" fill="#1A2D40" stroke="#93C5FD" stroke-width="1.5"/>
+            <circle r="10" fill="#0D1929" stroke="#BFDBFE" stroke-width="1"/>
+          </g>
+          <!-- Stator teeth overlay -->
+          <g fill="none" stroke="#334155" stroke-width="0.8" opacity="0.5">
+            <circle cx="240" cy="180" r="140" stroke-dasharray="8 6"/>
+          </g>
+          <!-- FEM mesh triangles -->
+          <g stroke="#1E3A5F" stroke-width="0.4" fill="none" opacity="0.6">
+            <polygon points="240,40 200,100 280,100"/>
+            <polygon points="200,100 160,160 240,180"/>
+            <polygon points="280,100 240,180 320,160"/>
+            <polygon points="100,180 160,160 140,240"/>
+            <polygon points="340,180 320,160 360,240"/>
+            <polygon points="140,240 180,300 200,260"/>
+            <polygon points="360,240 300,300 280,260"/>
+          </g>
+          <!-- Color scale bar -->
+          <defs>
+            <linearGradient id="fscale2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#93C5FD"/>
+              <stop offset="40%" stop-color="#D97706"/>
+              <stop offset="100%" stop-color="#7F1D1D"/>
+            </linearGradient>
+          </defs>
+          <rect x="444" y="24" width="10" height="310" fill="url(#fscale2)" rx="2"/>
+          <text x="440" y="22" font-size="8" fill="#64748B" font-family="Inter,sans-serif" text-anchor="end">2.2T</text>
+          <text x="440" y="342" font-size="8" fill="#64748B" font-family="Inter,sans-serif" text-anchor="end">0T</text>
+          <text x="16" y="20" font-size="10" fill="#64748B" font-family="Inter,sans-serif">Flux Density — FEM Contour Map</text>
+          <text x="16" y="34" font-size="8" fill="#475569" font-family="Inter,sans-serif">ANSYS Maxwell — IPMSM cross-section</text>
+        </svg>
+      </div>
+      <div class="featured-content">
+        <div class="featured-eyebrow">Machine Design</div>
+        <h3 class="featured-title">FEM-Based Optimisation of Interior Permanent Magnet Machines</h3>
+        <p class="featured-desc">This research programme develops systematic finite-element methods for designing IPMSM rotors that maximise torque density while minimising ripple, iron loss, and thermal stress. We combine parametric FEM sweeps with gradient-based and evolutionary optimisation algorithms to navigate the high-dimensional design space efficiently.</p>
+        <div class="featured-meta">
+          <div class="featured-meta-item"><div class="fmi-label">Objectives</div><div class="fmi-val">Torque density &gt;25 Nm/kg · Ripple &lt;3% · Efficiency &gt;96%</div></div>
+          <div class="featured-meta-item"><div class="fmi-label">Methods</div><div class="fmi-val">2D/3D FEM · RSM optimisation · Thermal-coupled analysis</div></div>
+          <div class="featured-meta-item"><div class="fmi-label">Applications</div><div class="fmi-val">EV traction · Industrial drives · Servo actuators</div></div>
+          <div class="featured-meta-item"><div class="fmi-label">Faculty</div><div class="fmi-val">Prof. R. Kumar · Dr. S. Mohanty</div></div>
+        </div>
+        <div class="featured-tags">
+          <span class="ftag">FEM</span>
+          <span class="ftag">IPMSM</span>
+          <span class="ftag">Optimisation</span>
+          <span class="ftag">Thermal Analysis</span>
+        </div>
+        <div class="featured-outputs"><strong>Recent Output:</strong> "Optimal Stator Slot Shape Design for Torque Ripple Minimisation in IPMSM" — IEEE Trans. Energy Conv., 2024</div>
+      </div>
+    </div>
+
+    <!-- Block 2: Condition Monitoring (reversed) -->
+    <div class="featured-block reverse reveal">
+      <div class="featured-vis" style="aspect-ratio:4/3">
+        <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" aria-label="MCSA spectrum for bearing fault detection">
+          <rect width="480" height="360" fill="#0F172A"/>
+          <g stroke="#1E293B" stroke-width="0.5" opacity="0.7">
+            <line x1="0" y1="72" x2="480" y2="72"/><line x1="0" y1="144" x2="480" y2="144"/>
+            <line x1="0" y1="216" x2="480" y2="216"/><line x1="0" y1="288" x2="480" y2="288"/>
+            <line x1="96" y1="0" x2="96" y2="360"/><line x1="192" y1="0" x2="192" y2="360"/>
+            <line x1="288" y1="0" x2="288" y2="360"/><line x1="384" y1="0" x2="384" y2="360"/>
+          </g>
+          <!-- Axes -->
+          <line x1="48" y1="310" x2="456" y2="310" stroke="#334155" stroke-width="1.5"/>
+          <line x1="48" y1="30" x2="48" y2="310" stroke="#334155" stroke-width="1.5"/>
+          <!-- Spectrum bars -->
+          <g>
+            <rect x="60" y="270" width="9" height="40" fill="#1E3A5F"/>
+            <rect x="78" y="240" width="9" height="70" fill="#1E3A5F"/>
+            <rect x="96" y="280" width="9" height="30" fill="#1E3A5F"/>
+            <rect x="120" y="210" width="9" height="100" fill="#D97706"/><!-- Fund -->
+            <rect x="138" y="275" width="9" height="35" fill="#1E3A5F"/>
+            <rect x="156" y="255" width="9" height="55" fill="#1E3A5F"/>
+            <rect x="180" y="80" width="9" height="230" fill="#D97706"/><!-- BPFO -->
+            <rect x="198" y="285" width="9" height="25" fill="#1E3A5F"/>
+            <rect x="216" y="265" width="9" height="45" fill="#1E3A5F"/>
+            <rect x="240" y="290" width="9" height="20" fill="#1E3A5F"/>
+            <rect x="264" y="200" width="9" height="110" fill="#B45309" opacity=".9"/>
+            <rect x="288" y="278" width="9" height="32" fill="#1E3A5F"/>
+            <rect x="312" y="268" width="9" height="42" fill="#1E3A5F"/>
+            <rect x="336" y="285" width="9" height="25" fill="#1E3A5F"/>
+            <rect x="360" y="260" width="9" height="50" fill="#1E3A5F"/>
+            <rect x="384" y="290" width="9" height="20" fill="#1E3A5F"/>
+            <rect x="408" y="295" width="9" height="15" fill="#1E3A5F"/>
+            <rect x="432" y="298" width="9" height="12" fill="#1E3A5F"/>
+          </g>
+          <!-- Fault marker annotations -->
+          <line x1="184" y1="80" x2="184" y2="40" stroke="#D97706" stroke-width="0.8" stroke-dasharray="3 2"/>
+          <text x="186" y="36" font-size="9" fill="#D97706" font-family="Inter,sans-serif">BPFO</text>
+          <line x1="124" y1="210" x2="124" y2="170" stroke="#60A5FA" stroke-width="0.8" stroke-dasharray="3 2"/>
+          <text x="126" y="166" font-size="9" fill="#60A5FA" font-family="Inter,sans-serif">f₁</text>
+          <line x1="268" y1="200" x2="268" y2="160" stroke="#B45309" stroke-width="0.8" stroke-dasharray="3 2"/>
+          <text x="270" y="156" font-size="9" fill="#B45309" font-family="Inter,sans-serif">2×BPFO</text>
+          <!-- Axis labels -->
+          <text x="252" y="330" font-size="10" fill="#64748B" font-family="Inter,sans-serif" text-anchor="middle">Frequency (Hz)</text>
+          <text x="18" y="180" font-size="10" fill="#64748B" font-family="Inter,sans-serif" transform="rotate(-90 18 180)">Amplitude (dB)</text>
+          <text x="54" y="20" font-size="10" fill="#64748B" font-family="Inter,sans-serif">MCSA Spectrum — Bearing Fault Signature</text>
+        </svg>
+      </div>
+      <div class="featured-content">
+        <div class="featured-eyebrow">Condition Monitoring</div>
+        <h3 class="featured-title">Non-Invasive Fault Diagnosis Using Motor Current Signature Analysis</h3>
+        <p class="featured-desc">This programme develops signal processing and machine learning methods for detecting bearing faults, broken rotor bars, and winding insulation degradation in squirrel cage induction motors during normal operation — with no physical access to the machine required.</p>
+        <div class="featured-meta">
+          <div class="featured-meta-item"><div class="fmi-label">Objectives</div><div class="fmi-val">Early fault detection · Classification accuracy &gt;95% · Online deployment</div></div>
+          <div class="featured-meta-item"><div class="fmi-label">Methods</div><div class="fmi-val">FFT / STFT / Wavelet · SVM · CNN-based classifiers</div></div>
+          <div class="featured-meta-item"><div class="fmi-label">Applications</div><div class="fmi-val">Industrial motors · Pump drives · Critical process equipment</div></div>
+          <div class="featured-meta-item"><div class="fmi-label">Faculty</div><div class="fmi-val">Prof. R. Kumar · Dr. A. Nanda</div></div>
+        </div>
+        <div class="featured-tags">
+          <span class="ftag">MCSA</span>
+          <span class="ftag">Wavelet-SVM</span>
+          <span class="ftag">CNN</span>
+          <span class="ftag">Predictive Maintenance</span>
+        </div>
+        <div class="featured-outputs"><strong>Recent Output:</strong> "Online Broken Rotor Bar Detection Using Wavelet-SVM" — Mech. Syst. Signal Process., 2024</div>
+      </div>
+    </div>
+
+    <!-- Block 3: MPC Motor Drives -->
+    <div class="featured-block reveal">
+      <div class="featured-vis" style="aspect-ratio:4/3">
+        <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" aria-label="Vector control block diagram">
+          <rect width="480" height="360" fill="#0F172A"/>
+          <g stroke="#1E293B" stroke-width="0.5" opacity="0.5">
+            <line x1="0" y1="72" x2="480" y2="72"/><line x1="0" y1="144" x2="480" y2="144"/>
+            <line x1="0" y1="216" x2="480" y2="216"/><line x1="0" y1="288" x2="480" y2="288"/>
+            <line x1="96" y1="0" x2="96" y2="360"/><line x1="192" y1="0" x2="192" y2="360"/>
+            <line x1="288" y1="0" x2="288" y2="360"/><line x1="384" y1="0" x2="384" y2="360"/>
+          </g>
+          <!-- FOC block diagram -->
+          <!-- Speed ref summing junction -->
+          <circle cx="60" cy="180" r="14" fill="none" stroke="#475569" stroke-width="1.5"/>
+          <line x1="54" y1="180" x2="66" y2="180" stroke="#475569" stroke-width="1"/>
+          <line x1="60" y1="174" x2="60" y2="186" stroke="#475569" stroke-width="1"/>
+          <text x="56" y="170" font-size="8" fill="#60A5FA" font-family="Inter,sans-serif">ω*</text>
+          <!-- Speed PI block -->
+          <rect x="88" y="164" width="56" height="32" rx="3" fill="#1E293B" stroke="#334155"/>
+          <text x="116" y="178" font-size="8" fill="#94A3B8" font-family="Inter,sans-serif" text-anchor="middle">Speed</text>
+          <text x="116" y="189" font-size="8" fill="#D97706" font-family="Inter,sans-serif" text-anchor="middle">PI</text>
+          <!-- Current ref summing junctions -->
+          <circle cx="174" cy="148" r="11" fill="none" stroke="#475569" stroke-width="1.2"/>
+          <text x="170" y="152" font-size="8" fill="#64748B" font-family="Inter,sans-serif">+</text>
+          <circle cx="174" cy="212" r="11" fill="none" stroke="#475569" stroke-width="1.2"/>
+          <text x="170" y="216" font-size="8" fill="#64748B" font-family="Inter,sans-serif">+</text>
+          <!-- Current PI blocks -->
+          <rect x="200" y="132" width="56" height="32" rx="3" fill="#1E293B" stroke="#334155"/>
+          <text x="228" y="146" font-size="8" fill="#94A3B8" font-family="Inter,sans-serif" text-anchor="middle">Id</text>
+          <text x="228" y="157" font-size="8" fill="#D97706" font-family="Inter,sans-serif" text-anchor="middle">PI</text>
+          <rect x="200" y="196" width="56" height="32" rx="3" fill="#1E293B" stroke="#334155"/>
+          <text x="228" y="210" font-size="8" fill="#94A3B8" font-family="Inter,sans-serif" text-anchor="middle">Iq</text>
+          <text x="228" y="221" font-size="8" fill="#D97706" font-family="Inter,sans-serif" text-anchor="middle">PI</text>
+          <!-- SVPWM block -->
+          <rect x="276" y="152" width="64" height="56" rx="3" fill="#1E293B" stroke="#334155"/>
+          <text x="308" y="176" font-size="8" fill="#60A5FA" font-family="Inter,sans-serif" text-anchor="middle">SV</text>
+          <text x="308" y="187" font-size="8" fill="#60A5FA" font-family="Inter,sans-serif" text-anchor="middle">PWM</text>
+          <text x="308" y="198" font-size="7" fill="#64748B" font-family="Inter,sans-serif" text-anchor="middle">+ Dead-time</text>
+          <!-- Inverter -->
+          <rect x="360" y="156" width="52" height="48" rx="3" fill="#1E293B" stroke="#334155"/>
+          <text x="386" y="178" font-size="8" fill="#94A3B8" font-family="Inter,sans-serif" text-anchor="middle">VSI</text>
+          <text x="386" y="190" font-size="7" fill="#D97706" font-family="Inter,sans-serif" text-anchor="middle">3-Phase</text>
+          <!-- Motor -->
+          <rect x="432" y="160" width="38" height="40" rx="3" fill="#1E293B" stroke="#334155"/>
+          <text x="451" y="182" font-size="9" fill="#94A3B8" font-family="Inter,sans-serif" text-anchor="middle">IM</text>
+          <!-- Park/Clark transform block -->
+          <rect x="200" y="280" width="70" height="32" rx="3" fill="#1E293B" stroke="#334155"/>
+          <text x="235" y="294" font-size="8" fill="#94A3B8" font-family="Inter,sans-serif" text-anchor="middle">Park/Clark</text>
+          <text x="235" y="305" font-size="7" fill="#64748B" font-family="Inter,sans-serif" text-anchor="middle">Transform</text>
+          <!-- Connections -->
+          <line x1="74" y1="180" x2="88" y2="180" stroke="#D97706" stroke-width="1"/>
+          <line x1="144" y1="180" x2="174" y2="180" stroke="#D97706" stroke-width="1"/>
+          <line x1="174" y1="158" x2="174" y2="148" stroke="#D97706" stroke-width="1"/>
+          <line x1="174" y1="169" x2="174" y2="212" stroke="#D97706" stroke-width="1"/>
+          <line x1="185" y1="148" x2="200" y2="148" stroke="#D97706" stroke-width="1"/>
+          <line x1="185" y1="212" x2="200" y2="212" stroke="#D97706" stroke-width="1"/>
+          <line x1="256" y1="148" x2="276" y2="168" stroke="#D97706" stroke-width="1"/>
+          <line x1="256" y1="212" x2="276" y2="192" stroke="#D97706" stroke-width="1"/>
+          <line x1="340" y1="180" x2="360" y2="180" stroke="#D97706" stroke-width="1"/>
+          <line x1="412" y1="180" x2="432" y2="180" stroke="#D97706" stroke-width="1"/>
+          <!-- Feedback lines -->
+          <line x1="451" y1="200" x2="451" y2="310" stroke="#60A5FA" stroke-width="0.8" stroke-dasharray="4 3"/>
+          <line x1="270" y1="310" x2="451" y2="310" stroke="#60A5FA" stroke-width="0.8" stroke-dasharray="4 3"/>
+          <line x1="270" y1="296" x2="270" y2="310" stroke="#60A5FA" stroke-width="0.8" stroke-dasharray="4 3"/>
+          <text x="16" y="20" font-size="10" fill="#64748B" font-family="Inter,sans-serif">Field-Oriented Control — Block Diagram</text>
+          <text x="16" y="34" font-size="8" fill="#475569" font-family="Inter,sans-serif">dSPACE DS1104 implementation</text>
+        </svg>
+      </div>
+      <div class="featured-content">
+        <div class="featured-eyebrow">Motor Drives</div>
+        <h3 class="featured-title">Model Predictive Torque Control for Three-Level NPC Inverter-Fed Drives</h3>
+        <p class="featured-desc">This investigation develops finite-control-set MPC algorithms that reduce switching frequency and torque ripple in NPC inverter-fed PMSM drives without sacrificing dynamic response. Online parameter estimation ensures robustness under temperature and load variation.</p>
+        <div class="featured-meta">
+          <div class="featured-meta-item"><div class="fmi-label">Objectives</div><div class="fmi-val">Switching freq. reduction ≥40% · THD &lt;3% · Transient response &lt;5ms</div></div>
+          <div class="featured-meta-item"><div class="fmi-label">Methods</div><div class="fmi-val">FCS-MPC · Online parameter estimation · dSPACE HIL validation</div></div>
+          <div class="featured-meta-item"><div class="fmi-label">Applications</div><div class="fmi-val">High-power drives · Traction · Renewable energy converters</div></div>
+          <div class="featured-meta-item"><div class="fmi-label">Faculty</div><div class="fmi-val">Dr. S. Mohanty · Prof. R. Kumar</div></div>
+        </div>
+        <div class="featured-tags">
+          <span class="ftag">MPC</span>
+          <span class="ftag">NPC Inverter</span>
+          <span class="ftag">PMSM</span>
+          <span class="ftag">dSPACE</span>
+        </div>
+        <div class="featured-outputs"><strong>Recent Output:</strong> "MPTC with Reduced Switching for 3L-NPC Fed PMSM" — IEEE Trans. Ind. Electron., 2023</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     ONGOING PROJECTS
+============================================================ -->
+<section id="ongoing" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Active Research</span>
+      <h2 class="section-title">Ongoing Projects</h2>
+      <p class="section-sub">Current research projects funded by national agencies, industry partners, and institutional grants.</p>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar" role="group" aria-label="Filter projects by category">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="machines">Machines</button>
+      <button class="filter-btn" data-filter="drives">Drives</button>
+      <button class="filter-btn" data-filter="power-electronics">Power Electronics</button>
+      <button class="filter-btn" data-filter="diagnostics">Diagnostics</button>
+      <button class="filter-btn" data-filter="ev">EV Systems</button>
+    </div>
+
+    <div class="projects-grid" id="projects-grid">
+
+      <div class="project-card reveal" data-cat="machines">
+        <div class="project-badge badge-sponsored">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+          Industry Sponsored
+        </div>
+        <div class="project-title">High-Torque-Density IPMSM Design for EV Traction</div>
+        <div class="project-agency">Sponsored by AICTE RPS</div>
+        <div class="project-meta">
+          <div class="pmeta-row"><span class="pmeta-key">PI</span><span>Prof. R. Kumar</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Duration</span><span>2023 – 2026</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Area</span><span><span class="project-area-tag">Machines</span></span></div>
+        </div>
+        <div class="project-pi">Scholars: <strong>Tanmoy Sahu, Dipti Rath</strong></div>
+      </div>
+
+      <div class="project-card reveal" style="transition-delay:.07s" data-cat="diagnostics">
+        <div class="project-badge badge-ongoing">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+          Ongoing
+        </div>
+        <div class="project-title">Deep Learning Framework for Incipient Bearing Fault Detection in IMDs</div>
+        <div class="project-agency">Funded by DST-SERB (CRG)</div>
+        <div class="project-meta">
+          <div class="pmeta-row"><span class="pmeta-key">PI</span><span>Prof. R. Kumar</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Duration</span><span>2022 – 2025</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Area</span><span><span class="project-area-tag">Diagnostics</span></span></div>
+        </div>
+        <div class="project-pi">Scholars: <strong>Amitesh Das, Priya Behera</strong></div>
+      </div>
+
+      <div class="project-card reveal" style="transition-delay:.14s" data-cat="drives">
+        <div class="project-badge badge-collaborative">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+          Collaborative
+        </div>
+        <div class="project-title">Finite Control Set MPC for Multilevel Inverter-Fed PMSM Drives</div>
+        <div class="project-agency">Collaborative with IIT Kharagpur</div>
+        <div class="project-meta">
+          <div class="pmeta-row"><span class="pmeta-key">PI</span><span>Dr. S. Mohanty</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Duration</span><span>2023 – 2025</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Area</span><span><span class="project-area-tag">Drives</span></span></div>
+        </div>
+        <div class="project-pi">Scholars: <strong>Kartik Rout</strong></div>
+      </div>
+
+      <div class="project-card reveal" style="transition-delay:.21s" data-cat="ev">
+        <div class="project-badge badge-sponsored">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+          Industry Sponsored
+        </div>
+        <div class="project-title">Axial Flux Motor Development for Two-Wheeler EV Platform</div>
+        <div class="project-agency">Sponsored by OEM Partner (Confidential)</div>
+        <div class="project-meta">
+          <div class="pmeta-row"><span class="pmeta-key">PI</span><span>Prof. R. Kumar</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Duration</span><span>2024 – 2027</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Area</span><span><span class="project-area-tag">EV Systems</span></span></div>
+        </div>
+        <div class="project-pi">Scholars: <strong>Dipti Rath, Aman Singh</strong></div>
+      </div>
+
+      <div class="project-card reveal" style="transition-delay:.28s" data-cat="power-electronics">
+        <div class="project-badge badge-ongoing">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+          Ongoing
+        </div>
+        <div class="project-title">SiC-Based High-Frequency Bidirectional DC-DC Converter for EV Battery Chargers</div>
+        <div class="project-agency">Funded by SERB-NPDF</div>
+        <div class="project-meta">
+          <div class="pmeta-row"><span class="pmeta-key">PI</span><span>Dr. S. Mohanty</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Duration</span><span>2023 – 2026</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Area</span><span><span class="project-area-tag">Power Electronics</span></span></div>
+        </div>
+        <div class="project-pi">Scholars: <strong>Nikita Prusty</strong></div>
+      </div>
+
+      <div class="project-card reveal" style="transition-delay:.35s" data-cat="machines">
+        <div class="project-badge badge-collaborative">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+          Collaborative
+        </div>
+        <div class="project-title">Thermal Management of High-Speed PMSM for Aerospace Actuator Application</div>
+        <div class="project-agency">Collaborative with DRDO DARE</div>
+        <div class="project-meta">
+          <div class="pmeta-row"><span class="pmeta-key">PI</span><span>Prof. R. Kumar</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Duration</span><span>2022 – 2025</span></div>
+          <div class="pmeta-row"><span class="pmeta-key">Area</span><span><span class="project-area-tag">Machines</span></span></div>
+        </div>
+        <div class="project-pi">Scholars: <strong>Priya Behera</strong></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COMPLETED PROJECTS
+============================================================ -->
+<section id="completed" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Concluded Work</span>
+      <h2 class="section-title">Completed Projects</h2>
+      <p class="section-sub">Projects that have concluded and their principal outcomes and scholarly contributions.</p>
+    </div>
+    <div class="completed-timeline" role="list">
+
+      <div class="ct-item reveal" role="listitem">
+        <div class="ct-date">2020 – 2023</div>
+        <div class="ct-box">
+          <div class="ct-title">Sensorless FOC of Induction Motor Drive for Pump Applications</div>
+          <p class="ct-outcomes">Developed a model reference adaptive system (MRAS)-based sensorless FOC algorithm for induction motor pumping systems, achieving accurate speed estimation down to 2 Hz. Validated on 5 kW laboratory test bench with DSP implementation.</p>
+          <div class="ct-pills">
+            <span class="ct-pill ct-pill-pub">3 Journal Papers</span>
+            <span class="ct-pill ct-pill-pub">2 IEEE Conferences</span>
+            <span class="ct-pill ct-pill-impact">1 PhD Awarded</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ct-item reveal" style="transition-delay:.08s" role="listitem">
+        <div class="ct-date">2018 – 2022</div>
+        <div class="ct-box">
+          <div class="ct-title">DFIG-Based Wind Energy Conversion Under Grid Voltage Unbalance — DST Fast Track</div>
+          <p class="ct-outcomes">Investigated novel dual-current-controller strategies for DFIG operation under unbalanced grid conditions, suppressing second-harmonic oscillations in DC-link power while maintaining rated MPPT efficiency. Funded by DST Fast Track (Young Scientist) scheme.</p>
+          <div class="ct-pills">
+            <span class="ct-pill ct-pill-pub">4 Journal Papers</span>
+            <span class="ct-pill ct-pill-pub">3 Conferences</span>
+            <span class="ct-pill ct-pill-impact">Industry Transfer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ct-item reveal" style="transition-delay:.16s" role="listitem">
+        <div class="ct-date">2016 – 2020</div>
+        <div class="ct-box">
+          <div class="ct-title">Condition Monitoring of Squirrel Cage Induction Motors via MCSA — DST SERB</div>
+          <p class="ct-outcomes">Established MCSA-based fault detection protocols for bearing, broken bar, and eccentricity faults. Developed a wavelet-transformed SVM classifier achieving 97.3% classification accuracy across five fault conditions on an instrumented 7.5 kW test rig.</p>
+          <div class="ct-pills">
+            <span class="ct-pill ct-pill-pub">5 Journal Papers</span>
+            <span class="ct-pill ct-pill-pub">4 Conferences</span>
+            <span class="ct-pill ct-pill-impact">2 PhDs Awarded</span>
+            <span class="ct-pill ct-pill-impact">1 Patent Filed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ct-item reveal" style="transition-delay:.24s" role="listitem">
+        <div class="ct-date">2014 – 2018</div>
+        <div class="ct-box">
+          <div class="ct-title">Optimum Design of Energy-Efficient Three-Phase Induction Motors — BHEL Sponsored</div>
+          <p class="ct-outcomes">Collaborated with BHEL Bhopal to redesign stator slot geometry and winding configuration of standard frame motors, achieving IE3 efficiency class compliance with no increase in frame size. Laboratory prototype tested and validated against BHEL's test bed results.</p>
+          <div class="ct-pills">
+            <span class="ct-pill ct-pill-pub">2 Journal Papers</span>
+            <span class="ct-pill ct-pill-impact">BHEL Technology Transfer</span>
+            <span class="ct-pill ct-pill-impact">1 PhD Awarded</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PUBLICATIONS
+============================================================ -->
+<section id="publications" class="section-pad">
+  <div class="container">
+    <div class="pub-section-head reveal" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;flex-wrap:wrap;gap:16px">
+      <div>
+        <span class="section-eyebrow">Scholarly Output</span>
+        <h2 class="section-title" style="margin-bottom:0">Publications</h2>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="pub-controls reveal">
+      <div class="pub-search">
+        <svg class="pub-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="search" id="pub-search" placeholder="Search title, author, journal…" aria-label="Search publications">
+      </div>
+      <div class="pub-filters" role="group" aria-label="Filter publications">
+        <button class="pub-filter active" data-pf="all">All</button>
+        <button class="pub-filter" data-pf="journal">Journal</button>
+        <button class="pub-filter" data-pf="conference">Conference</button>
+        <button class="pub-filter" data-pf="patent">Patent</button>
+      </div>
+    </div>
+
+    <div class="pub-count reveal" id="pub-count">Showing <strong>12</strong> publications</div>
+
+    <div class="pub-table-wrap reveal">
+      <table class="pub-table" aria-label="Publications list">
+        <thead>
+          <tr>
+            <th scope="col">Year</th>
+            <th scope="col">Title</th>
+            <th scope="col">Authors</th>
+            <th scope="col">Venue</th>
+            <th scope="col">Type</th>
+            <th scope="col">Links</th>
+          </tr>
+        </thead>
+        <tbody id="pub-tbody">
+          <tr data-type="journal" data-text="2024 optimal stator slot shape design torque ripple minimisation ipmsm response surface kumar sahu ieee transactions energy conversion">
+            <td class="pub-year">2024</td>
+            <td class="pub-title-cell">Optimal Stator Slot Shape Design for Torque Ripple Minimisation in IPMSM Using Response Surface Methodology</td>
+            <td class="pub-authors">R. Kumar, T. Sahu, S. Mohanty</td>
+            <td class="pub-venue">IEEE Trans. Energy Conv.</td>
+            <td><span class="pub-type-badge pb-journal">Journal</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+          <tr data-type="journal" data-text="2024 online broken rotor bar detection wavelet svm classifier kumar das nanda mechanical systems signal processing">
+            <td class="pub-year">2024</td>
+            <td class="pub-title-cell">Online Broken Rotor Bar Detection in Squirrel Cage Induction Motors Using Wavelet-SVM Classifier</td>
+            <td class="pub-authors">A. Das, P. Nanda, R. Kumar</td>
+            <td class="pub-venue">Mech. Syst. Signal Process.</td>
+            <td><span class="pub-type-badge pb-journal">Journal</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+          <tr data-type="journal" data-text="2023 model predictive torque control reduced switching frequency three level npc inverter pmsm mohanty rout kumar ieee transactions industrial electronics">
+            <td class="pub-year">2023</td>
+            <td class="pub-title-cell">Model Predictive Torque Control with Reduced Switching Frequency for Three-Level NPC Inverter Fed PMSM Drives</td>
+            <td class="pub-authors">S. Mohanty, K. Rout, R. Kumar</td>
+            <td class="pub-venue">IEEE Trans. Ind. Electron.</td>
+            <td><span class="pub-type-badge pb-journal">Journal</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+          <tr data-type="journal" data-text="2023 thermal analysis cooling system axial flux machine ev application behera kumar applied thermal engineering">
+            <td class="pub-year">2023</td>
+            <td class="pub-title-cell">Thermal Analysis and Cooling System Design for High-Power-Density Axial Flux Machine in EV Application</td>
+            <td class="pub-authors">P. Behera, R. Kumar, T. Sahu</td>
+            <td class="pub-venue">Appl. Therm. Eng.</td>
+            <td><span class="pub-type-badge pb-journal">Journal</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+          <tr data-type="journal" data-text="2022 grid integration dfig wind energy conversion unbalanced voltage nanda mohanty patra renewable energy">
+            <td class="pub-year">2022</td>
+            <td class="pub-title-cell">Grid Integration of DFIG-Based Wind Energy Conversion System Under Unbalanced Voltage Conditions</td>
+            <td class="pub-authors">A. Patra, S. Mohanty, P. Nanda</td>
+            <td class="pub-venue">Renew. Energy</td>
+            <td><span class="pub-type-badge pb-journal">Journal</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+          <tr data-type="conference" data-text="2023 adaptive field weakening control ipmsm wide speed range ev mohanty singh ecce ieee energy conversion congress exposition">
+            <td class="pub-year">2023</td>
+            <td class="pub-title-cell">Adaptive Field-Weakening Control Strategy for Wide-Speed-Range IPMSM in EV Application</td>
+            <td class="pub-authors">S. Mohanty, A. Singh, R. Kumar</td>
+            <td class="pub-venue">IEEE ECCE 2023</td>
+            <td><span class="pub-type-badge pb-conference">Conference</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+          <tr data-type="conference" data-text="2023 convolutional neural network bearing fault detection stator current das prusty kumar iemdc ieee international electric machines drives conference">
+            <td class="pub-year">2023</td>
+            <td class="pub-title-cell">CNN-Based Bearing Fault Detection Using Stator Current Time-Frequency Images</td>
+            <td class="pub-authors">A. Das, N. Prusty, R. Kumar</td>
+            <td class="pub-venue">IEEE IEMDC 2023</td>
+            <td><span class="pub-type-badge pb-conference">Conference</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+          <tr data-type="journal" data-text="2021 sic based bidirectional dc dc converter ev charging mohanty panda ieee transactions power electronics">
+            <td class="pub-year">2021</td>
+            <td class="pub-title-cell">SiC-Based Bidirectional DC-DC Converter with Model Predictive Control for EV Battery Charging</td>
+            <td class="pub-authors">S. Mohanty, S. Panda</td>
+            <td class="pub-venue">IEEE Trans. Power Electron.</td>
+            <td><span class="pub-type-badge pb-journal">Journal</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+          <tr data-type="journal" data-text="2021 mras sensorless field oriented control induction motor low speed pump kumar swain ieee transactions industrial applications">
+            <td class="pub-year">2021</td>
+            <td class="pub-title-cell">MRAS-Based Sensorless FOC of Induction Motor Drive for Low-Speed Pumping Applications</td>
+            <td class="pub-authors">R. Kumar, V. Swain, K. Rout</td>
+            <td class="pub-venue">IEEE Trans. Ind. Appl.</td>
+            <td><span class="pub-type-badge pb-journal">Journal</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+          <tr data-type="conference" data-text="2022 srm torque ripple minimisation direct instantaneous torque control panda kumar iemdc">
+            <td class="pub-year">2022</td>
+            <td class="pub-title-cell">Torque Ripple Minimisation in SRM Drive Using Direct Instantaneous Torque Control</td>
+            <td class="pub-authors">S. Panda, R. Kumar</td>
+            <td class="pub-venue">IEEE IEMDC 2022</td>
+            <td><span class="pub-type-badge pb-conference">Conference</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+          <tr data-type="patent" data-text="2022 patent non-invasive bearing fault detection system method kumar das">
+            <td class="pub-year">2022</td>
+            <td class="pub-title-cell">System and Method for Non-Invasive Bearing Fault Detection in Induction Motor Drives</td>
+            <td class="pub-authors">R. Kumar, A. Das</td>
+            <td class="pub-venue">Indian Patent — Filed</td>
+            <td><span class="pub-type-badge pb-patent">Patent</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View filing">Filing</button></td>
+          </tr>
+          <tr data-type="journal" data-text="2020 efficiency improvement three phase induction motor stator slot redesign ie3 bhel kumar mishra ieee transactions energy conversion">
+            <td class="pub-year">2020</td>
+            <td class="pub-title-cell">Efficiency Improvement of Three-Phase Induction Motors Through Stator Slot Geometry Redesign for IE3 Compliance</td>
+            <td class="pub-authors">R. Kumar, A. Mishra</td>
+            <td class="pub-venue">IEEE Trans. Energy Conv.</td>
+            <td><span class="pub-type-badge pb-journal">Journal</span></td>
+            <td class="pub-actions"><button class="pub-action-btn" aria-label="View DOI">DOI</button><button class="pub-action-btn" aria-label="Cite">Cite</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESEARCH IMPACT
+============================================================ -->
+<section id="impact" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Metrics</span>
+      <h2 class="section-title">Research Impact</h2>
+      <p class="section-sub">Quantitative indicators of the laboratory's scholarly and professional contributions.</p>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-card reveal">
+        <div class="impact-num" data-target="15" data-suffix="+">0+</div>
+        <div class="impact-div"></div>
+        <div class="impact-label">Journal &amp; Conference Publications</div>
+      </div>
+      <div class="impact-card reveal" style="transition-delay:.07s">
+        <div class="impact-num" data-target="5" data-suffix="">0</div>
+        <div class="impact-div"></div>
+        <div class="impact-label">Research Grants Received</div>
+      </div>
+      <div class="impact-card reveal" style="transition-delay:.14s">
+        <div class="impact-num" data-target="10" data-suffix="+">0+</div>
+        <div class="impact-div"></div>
+        <div class="impact-label">Industry-Sponsored Projects</div>
+      </div>
+      <div class="impact-card reveal" style="transition-delay:.21s">
+        <div class="impact-num" data-target="12" data-suffix="">0</div>
+        <div class="impact-div"></div>
+        <div class="impact-label">Active Research Scholars</div>
+      </div>
+      <div class="impact-card reveal" style="transition-delay:.28s">
+        <div class="impact-num" data-target="8" data-suffix="">0</div>
+        <div class="impact-div"></div>
+        <div class="impact-label">PhD Degrees Awarded</div>
+      </div>
+      <div class="impact-card reveal" style="transition-delay:.35s">
+        <div class="impact-num" data-target="1" data-suffix="">0</div>
+        <div class="impact-div"></div>
+        <div class="impact-label">Patent Filed</div>
+      </div>
+    </div>
+    <div class="impact-statement reveal" style="transition-delay:.4s">
+      <p class="impact-stmt-text">
+        "Our research generates knowledge that is theoretically grounded and experimentally validated — published in IEEE Transactions journals, presented at ECCE and IEMDC, and deployed in real systems through our industry partnerships. We measure impact not only by citation counts but by the quality of engineers our laboratory produces and the practical problems our research resolves."
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COLLABORATIONS
+============================================================ -->
+<section id="collaborations" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Partners</span>
+      <h2 class="section-title">Collaborations</h2>
+      <p class="section-sub">Industry, academic, and government partners enabling research at scale.</p>
+    </div>
+    <div class="collab-layout">
+      <div class="collab-cats reveal">
+
+        <div>
+          <div class="collab-cat-title">Industry Partners</div>
+          <div class="collab-logos">
+            <div class="collab-logo-item"><div class="collab-logo-text">BHEL<small>Power Systems</small></div></div>
+            <div class="collab-logo-item"><div class="collab-logo-text">ABB<small>Drives &amp; Motors</small></div></div>
+            <div class="collab-logo-item"><div class="collab-logo-text">SIEMENS<small>Energy</small></div></div>
+            <div class="collab-logo-item"><div class="collab-logo-text">TATA<small>Power</small></div></div>
+            <div class="collab-logo-item"><div class="collab-logo-text">NTPC<small>Grid Systems</small></div></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="collab-cat-title">Academic Institutions</div>
+          <div class="collab-logos">
+            <div class="collab-logo-item"><div class="collab-logo-text">IIT<small>Kharagpur</small></div></div>
+            <div class="collab-logo-item"><div class="collab-logo-text">IIT<small>Bombay</small></div></div>
+            <div class="collab-logo-item"><div class="collab-logo-text">NIT<small>Rourkela</small></div></div>
+            <div class="collab-logo-item"><div class="collab-logo-text">VSSUT<small>Burla</small></div></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="collab-cat-title">Government &amp; Research Agencies</div>
+          <div class="collab-logos">
+            <div class="collab-logo-item"><div class="collab-logo-text">DST<small>SERB India</small></div></div>
+            <div class="collab-logo-item"><div class="collab-logo-text">DRDO<small>DARE / DLRL</small></div></div>
+            <div class="collab-logo-item"><div class="collab-logo-text">CSIR<small>CEERI Pilani</small></div></div>
+            <div class="collab-logo-item"><div class="collab-logo-text">AICTE<small>RPS Scheme</small></div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- India collaboration map SVG -->
+      <div class="collab-map-wrap reveal" style="transition-delay:.15s" aria-hidden="true">
+        <svg viewBox="0 0 360 440" xmlns="http://www.w3.org/2000/svg">
+          <!-- simplified India outline -->
+          <path d="M140 20 L180 15 L220 25 L250 50 L270 80 L280 120 L290 160 L300 200 L295 240 L285 270 L270 300 L250 330 L230 360 L210 390 L195 420 L180 440 L165 420 L150 390 L130 360 L110 330 L90 300 L75 270 L65 240 L60 200 L70 160 L80 120 L90 80 L110 50 Z" fill="#F4F4F5" stroke="#E5E7EB" stroke-width="1.5"/>
+          <!-- Lab location - Bhubaneswar -->
+          <circle cx="210" cy="285" r="7" fill="#D97706"/>
+          <circle cx="210" cy="285" r="14" fill="none" stroke="#D97706" stroke-width="1" opacity=".4"/>
+          <text x="225" y="290" font-size="10" fill="#111827" font-family="Inter,sans-serif" font-weight="700">EML Lab</text>
+          <!-- IIT KGP -->
+          <circle cx="225" cy="260" r="4" fill="#475569"/>
+          <text x="232" y="264" font-size="8" fill="#475569" font-family="Inter,sans-serif">IIT KGP</text>
+          <!-- IIT Bombay -->
+          <circle cx="110" cy="235" r="4" fill="#475569"/>
+          <text x="118" y="239" font-size="8" fill="#475569" font-family="Inter,sans-serif">IIT Bombay</text>
+          <!-- BHEL Bhopal -->
+          <circle cx="155" cy="195" r="4" fill="#B45309"/>
+          <text x="163" y="199" font-size="8" fill="#B45309" font-family="Inter,sans-serif">BHEL</text>
+          <!-- CSIR CEERI -->
+          <circle cx="148" cy="140" r="4" fill="#475569"/>
+          <text x="156" y="144" font-size="8" fill="#475569" font-family="Inter,sans-serif">CSIR</text>
+          <!-- Delhi DRDO -->
+          <circle cx="168" cy="115" r="4" fill="#1D4ED8"/>
+          <text x="176" y="119" font-size="8" fill="#1D4ED8" font-family="Inter,sans-serif">DRDO</text>
+          <!-- Connection lines -->
+          <line x1="210" y1="285" x2="225" y2="260" stroke="#E5E7EB" stroke-width="0.8" stroke-dasharray="3 2"/>
+          <line x1="210" y1="285" x2="110" y2="235" stroke="#E5E7EB" stroke-width="0.8" stroke-dasharray="3 2"/>
+          <line x1="210" y1="285" x2="155" y2="195" stroke="#E5E7EB" stroke-width="0.8" stroke-dasharray="3 2"/>
+          <line x1="210" y1="285" x2="148" y2="140" stroke="#E5E7EB" stroke-width="0.8" stroke-dasharray="3 2"/>
+          <line x1="210" y1="285" x2="168" y2="115" stroke="#E5E7EB" stroke-width="0.8" stroke-dasharray="3 2"/>
+          <text x="10" y="430" font-size="8" fill="#94A3B8" font-family="Inter,sans-serif">Active collaboration network</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESEARCH OPPORTUNITIES
+============================================================ -->
+<section id="opportunities">
+  <div class="opp-grid-bg" aria-hidden="true"></div>
+  <!-- Background vis -->
+  <div class="opp-bg-vis" aria-hidden="true">
+    <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="white" fill="none">
+        <!-- Axes -->
+        <line x1="40" y1="460" x2="380" y2="460" stroke-width="1.5"/>
+        <line x1="40" y1="20" x2="40" y2="460" stroke-width="1.5"/>
+        <!-- Grid -->
+        <g stroke-width="0.5" opacity=".4">
+          <line x1="40" y1="380" x2="380" y2="380"/><line x1="40" y1="300" x2="380" y2="300"/>
+          <line x1="40" y1="220" x2="380" y2="220"/><line x1="40" y1="140" x2="380" y2="140"/><line x1="40" y1="60" x2="380" y2="60"/>
+          <line x1="120" y1="20" x2="120" y2="460"/><line x1="200" y1="20" x2="200" y2="460"/>
+          <line x1="280" y1="20" x2="280" y2="460"/><line x1="360" y1="20" x2="360" y2="460"/>
+        </g>
+        <!-- Torque-speed -->
+        <path d="M40 60 C120,55 180,130 220,210 C255,280 300,390 380,440" stroke-width="2.5"/>
+        <!-- Current -->
+        <path d="M40 400 C100,380 180,340 220,310 C280,280 340,360 380,420" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <!-- Efficiency -->
+        <path d="M40 440 C100,390 160,200 220,130 C280,70 340,110 380,180" stroke-width="1.5" stroke-dasharray="3 3" opacity=".6"/>
+        <!-- Labels -->
+        <text x="210" y="490" font-size="12" fill="white" font-family="Inter,sans-serif" text-anchor="middle">Speed (rpm)</text>
+        <text x="15" y="250" font-size="12" fill="white" font-family="Inter,sans-serif" transform="rotate(-90 15 250)">T / I / η</text>
+      </g>
+    </svg>
+  </div>
+  <div class="container opp-inner">
+    <div class="opp-header reveal">
+      <div class="section-eyebrow" style="color:#D97706;justify-content:center;display:flex;gap:12px;align-items:center;margin-bottom:20px">
+        <span style="display:block;width:40px;height:1px;background:#D97706"></span>
+        Opportunities
+        <span style="display:block;width:40px;height:1px;background:#D97706"></span>
+      </div>
+      <h2 class="opp-headline">Join Our Research Efforts</h2>
+      <p class="opp-sub">Opportunities for students, researchers, and industry collaborators seeking to contribute to cutting-edge electrical machines research.</p>
+    </div>
+    <div class="opp-cards">
+
+      <div class="opp-card reveal">
+        <svg class="opp-card-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="4" y="6" width="32" height="28" rx="2"/>
+          <line x1="4" y1="14" x2="36" y2="14"/>
+          <line x1="12" y1="20" x2="28" y2="20"/>
+          <line x1="12" y1="26" x2="22" y2="26"/>
+        </svg>
+        <div class="opp-card-title">Undergraduate Research</div>
+        <div class="opp-card-eligibility">B.Tech / B.E. Final Year</div>
+        <div class="opp-card-areas">Final-year projects in motor design, MATLAB simulation, condition monitoring signal analysis, and power electronics hardware. Candidates gain hands-on lab experience and co-authorship potential on conference papers.</div>
+        <a href="index.html#footer" class="opp-card-link">Apply Now →</a>
+      </div>
+
+      <div class="opp-card reveal" style="transition-delay:.08s">
+        <svg class="opp-card-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="20" cy="14" r="6"/>
+          <path d="M8 36c0-6.6 5.4-12 12-12s12 5.4 12 12"/>
+          <path d="M28 8l4 4-4 4"/>
+        </svg>
+        <div class="opp-card-title">Master's Research</div>
+        <div class="opp-card-eligibility">M.Tech Thesis Students</div>
+        <div class="opp-card-areas">Thesis-level research in electric machine FEM design, drive control implementation on dSPACE, renewable energy integration, and fault diagnostics. Students are co-supervised by faculty and senior PhD scholars.</div>
+        <a href="index.html#footer" class="opp-card-link">Apply Now →</a>
+      </div>
+
+      <div class="opp-card reveal" style="transition-delay:.16s">
+        <svg class="opp-card-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="20" cy="20" r="14" stroke-dasharray="5 3"/>
+          <circle cx="20" cy="20" r="7"/>
+          <circle cx="20" cy="20" r="2.5" fill="currentColor" stroke="none"/>
+          <line x1="20" y1="4" x2="20" y2="11"/>
+          <line x1="20" y1="29" x2="20" y2="36"/>
+          <line x1="4" y1="20" x2="11" y2="20"/>
+          <line x1="29" y1="20" x2="36" y2="20"/>
+        </svg>
+        <div class="opp-card-title">PhD Research</div>
+        <div class="opp-card-eligibility">Full-time &amp; Part-time</div>
+        <div class="opp-card-areas">Doctoral research on nationally funded and industry-sponsored projects. Positions available in machine design optimisation, advanced drive control, condition monitoring with ML, and EV motor systems. Fellowship support available.</div>
+        <a href="index.html#footer" class="opp-card-link">Apply Now →</a>
+      </div>
+
+      <div class="opp-card reveal" style="transition-delay:.24s">
+        <svg class="opp-card-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="4" y="14" width="14" height="14" rx="2"/>
+          <rect x="22" y="14" width="14" height="14" rx="2"/>
+          <line x1="18" y1="18" x2="22" y2="18"/>
+          <line x1="18" y1="24" x2="22" y2="24"/>
+          <line x1="2" y1="21" x2="4" y2="21"/>
+          <line x1="36" y1="21" x2="38" y2="21"/>
+          <circle cx="20" cy="7" r="3"/><line x1="20" y1="10" x2="20" y2="14"/>
+        </svg>
+        <div class="opp-card-title">Industry Collaboration</div>
+        <div class="opp-card-eligibility">Companies &amp; Enterprises</div>
+        <div class="opp-card-areas">Sponsored research agreements, technology transfer, prototype development, and testing services. The laboratory offers motor performance characterisation, FEM-based design review, and drive control development under NDA if required.</div>
+        <a href="index.html#footer" class="opp-card-link">Contact Us →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer id="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg width="28" height="28" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <circle cx="18" cy="18" r="16" stroke="#D97706" stroke-width="1.5" fill="none"/>
+            <circle cx="18" cy="18" r="10" stroke="#D97706" stroke-width="1" fill="none" stroke-dasharray="3 3"/>
+            <circle cx="18" cy="18" r="4" fill="#D97706"/>
+            <line x1="18" y1="2" x2="18" y2="8" stroke="#D97706" stroke-width="1.5"/>
+            <line x1="18" y1="28" x2="18" y2="34" stroke="#D97706" stroke-width="1.5"/>
+            <line x1="2" y1="18" x2="8" y2="18" stroke="#D97706" stroke-width="1.5"/>
+            <line x1="28" y1="18" x2="34" y2="18" stroke="#D97706" stroke-width="1.5"/>
+          </svg>
+          Electrical Machines Laboratory
+        </div>
+        <p class="footer-tagline">Advancing research in electric machines, drives, energy conversion, and sustainable electrification since 2004.</p>
+        <div class="footer-contact">
+          <p>Department of Electrical Engineering<br>Institute of Technology, Bhubaneswar<br>Odisha – 751 003, India<br><br>
+          <a href="tel:+916742345678" style="color:#9CA3AF;">+91-674-234-5678</a><br>
+          <a href="mailto:emlabresearch@institute.ac.in" style="color:#9CA3AF;">emlabresearch@institute.ac.in</a></p>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Research</div>
+        <ul class="footer-links" role="list">
+          <li><a href="#domains">Machine Design</a></li>
+          <li><a href="#domains">Condition Monitoring</a></li>
+          <li><a href="#domains">Motor Drives</a></li>
+          <li><a href="#domains">Power Electronics</a></li>
+          <li><a href="#domains">EV Systems</a></li>
+          <li><a href="#domains">Renewable Energy</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Navigate</div>
+        <ul class="footer-links" role="list">
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#ongoing">Projects</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="#impact">Impact</a></li>
+          <li><a href="#collaborations">Collaborations</a></li>
+          <li><a href="#opportunities">Join Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Resources</div>
+        <ul class="footer-links" role="list">
+          <li><a href="#">Lab Handbook</a></li>
+          <li><a href="#">Equipment Booking</a></li>
+          <li><a href="#">PhD Openings</a></li>
+          <li><a href="#">Annual Reports</a></li>
+          <li><a href="about.html">About the Lab</a></li>
+          <li><a href="index.html#footer">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Electrical Machines Laboratory. All rights reserved.</div>
+      <div class="social-icons" aria-label="Social media links">
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5c0-1.4 1-2.5 2.5-2.5S17 11.1 17 12.5V17"/></svg></a>
+        <a href="#" aria-label="ResearchGate"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12h5M8 8h4c1.7 0 3 1.3 3 3s-1.3 3-3 3h-1l3 4"/></svg></a>
+        <a href="#" aria-label="Google Scholar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 3l7 5 7-5"/><path d="M12 8v13"/><circle cx="19" cy="17" r="3"/></svg></a>
+        <a href="mailto:emlabresearch@institute.ac.in" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 7 10-7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+// ---- Navbar scroll ----
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// ---- Hamburger ----
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', open);
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// ---- Transformer Canvas Animation ----
+(function () {
+  const canvas = document.getElementById('transformer-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = 400, H = 420;
+  canvas.width = W; canvas.height = H;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Colors
+  const C_CORE    = '#243044';
+  const C_CORE_S  = '#334155';
+  const C_BG      = '#0F172A';
+  const C_HV      = '#D97706';
+  const C_LV      = '#60A5FA';
+  const C_ANNOT   = 'rgba(203,213,225,0.35)';
+
+  // Transformer geometry (core-type, single phase for clarity, scaled to 3 columns)
+  // Three limbs at x = 100, 200, 300; yoke at y=60 and y=360
+  const LIMB_W   = 36;
+  const LIMB_H   = 280;
+  const LIMB_Y   = 70;
+  const YOKE_H   = 28;
+  const LIMBS_X  = [110, 200, 290];
+  const WIN_W    = 24; // winding width each side
+  const WIN_H    = 200;
+  const WIN_Y    = LIMB_Y + (LIMB_H - WIN_H) / 2;
+
+  function drawCore() {
+    ctx.fillStyle = C_CORE;
+    ctx.strokeStyle = C_CORE_S;
+    ctx.lineWidth = 1;
+
+    // Top yoke
+    ctx.beginPath();
+    ctx.roundRect(LIMBS_X[0] - LIMB_W / 2, LIMB_Y - YOKE_H, LIMBS_X[2] - LIMBS_X[0] + LIMB_W, YOKE_H + 2, 3);
+    ctx.fill(); ctx.stroke();
+
+    // Bottom yoke
+    ctx.beginPath();
+    ctx.roundRect(LIMBS_X[0] - LIMB_W / 2, LIMB_Y + LIMB_H - 2, LIMBS_X[2] - LIMBS_X[0] + LIMB_W, YOKE_H + 2, 3);
+    ctx.fill(); ctx.stroke();
+
+    // Three limbs
+    LIMBS_X.forEach(lx => {
+      ctx.beginPath();
+      ctx.roundRect(lx - LIMB_W / 2, LIMB_Y, LIMB_W, LIMB_H, 2);
+      ctx.fill(); ctx.stroke();
+    });
+
+    // Lamination lines on yokes
+    ctx.strokeStyle = 'rgba(71,85,105,0.4)';
+    ctx.lineWidth = 0.5;
+    for (let i = 4; i < YOKE_H; i += 5) {
+      ctx.beginPath();
+      ctx.moveTo(LIMBS_X[0] - LIMB_W / 2, LIMB_Y - YOKE_H + i);
+      ctx.lineTo(LIMBS_X[2] + LIMB_W / 2, LIMB_Y - YOKE_H + i);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(LIMBS_X[0] - LIMB_W / 2, LIMB_Y + LIMB_H + i);
+      ctx.lineTo(LIMBS_X[2] + LIMB_W / 2, LIMB_Y + LIMB_H + i);
+      ctx.stroke();
+    }
+    // Lamination lines on limbs
+    LIMBS_X.forEach(lx => {
+      for (let i = 10; i < LIMB_H; i += 6) {
+        ctx.beginPath();
+        ctx.moveTo(lx - LIMB_W / 2, LIMB_Y + i);
+        ctx.lineTo(lx + LIMB_W / 2, LIMB_Y + i);
+        ctx.stroke();
+      }
+    });
+  }
+
+  function drawWindings(t) {
+    // Phase current brightnesses for 3-phase: sin, sin-120, sin-240
+    const phA = 0.5 + 0.5 * Math.sin(t);
+    const phB = 0.5 + 0.5 * Math.sin(t - (2 * Math.PI / 3));
+    const phC = 0.5 + 0.5 * Math.sin(t - (4 * Math.PI / 3));
+    const phases = [phA, phB, phC];
+    const hvColors = ['#D97706', '#D97706', '#D97706'];
+    const lvColors = ['#60A5FA', '#60A5FA', '#60A5FA'];
+
+    LIMBS_X.forEach((lx, i) => {
+      const brightness = phases[i];
+
+      // HV winding (left of limb)
+      const hvAlpha = 0.45 + brightness * 0.55;
+      ctx.globalAlpha = hvAlpha;
+      // Winding turns (stacked horizontal rects)
+      const turns = 18;
+      const turnH = WIN_H / turns;
+      for (let t2 = 0; t2 < turns; t2++) {
+        const y = WIN_Y + t2 * turnH;
+        const col = t2 % 2 === 0 ? '#D97706' : '#B45309';
+        ctx.fillStyle = col;
+        ctx.beginPath();
+        ctx.roundRect(lx - LIMB_W / 2 - WIN_W - 3, y + 1, WIN_W, turnH - 2, 1);
+        ctx.fill();
+      }
+
+      // LV winding (right of limb)
+      const lvAlpha = 0.4 + brightness * 0.6;
+      ctx.globalAlpha = lvAlpha;
+      for (let t2 = 0; t2 < turns - 4; t2++) {
+        const y = WIN_Y + (WIN_H - (turns - 4) * turnH) / 2 + t2 * turnH;
+        const col = t2 % 2 === 0 ? '#60A5FA' : '#3B82F6';
+        ctx.fillStyle = col;
+        ctx.beginPath();
+        ctx.roundRect(lx + LIMB_W / 2 + 3, y + 1, WIN_W - 4, turnH - 2, 1);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    });
+  }
+
+  function drawFluxPaths(t) {
+    // Three closed flux loops through the three limbs
+    // Limb 1-2 loop (left window)
+    const phA = Math.sin(t);
+    const phB = Math.sin(t - (2 * Math.PI / 3));
+    const phC = Math.sin(t - (4 * Math.PI / 3));
+    const fluxes = [
+      { lx1: LIMBS_X[0], lx2: LIMBS_X[1], flux: phA - phB },
+      { lx1: LIMBS_X[1], lx2: LIMBS_X[2], flux: phB - phC },
+    ];
+
+    fluxes.forEach(({ lx1, lx2, flux }) => {
+      const intensity = Math.abs(flux);
+      const alpha = 0.08 + intensity * 0.22;
+      const col = flux > 0 ? `rgba(217,119,6,${alpha})` : `rgba(96,165,250,${alpha})`;
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 2 + intensity * 3;
+      ctx.setLineDash([]);
+
+      const cx = (lx1 + lx2) / 2;
+      const topY = LIMB_Y - YOKE_H / 2;
+      const botY = LIMB_Y + LIMB_H + YOKE_H / 2;
+
+      ctx.beginPath();
+      // Top yoke segment
+      ctx.moveTo(lx1, topY);
+      ctx.lineTo(lx2, topY);
+      // Right limb down
+      ctx.moveTo(lx2, topY);
+      ctx.lineTo(lx2, botY);
+      // Bottom yoke
+      ctx.moveTo(lx2, botY);
+      ctx.lineTo(lx1, botY);
+      // Left limb up
+      ctx.moveTo(lx1, botY);
+      ctx.lineTo(lx1, topY);
+      ctx.stroke();
+
+      // Arrow direction on top yoke
+      if (Math.abs(flux) > 0.1) {
+        const dir = flux > 0 ? 1 : -1;
+        const ax = cx + dir * 10;
+        ctx.fillStyle = col;
+        ctx.beginPath();
+        ctx.moveTo(ax, topY - 5);
+        ctx.lineTo(ax + dir * 8, topY);
+        ctx.lineTo(ax, topY + 5);
+        ctx.fill();
+      }
+    });
+    ctx.setLineDash([]);
+  }
+
+  function drawAnnotations() {
+    ctx.font = '10px Inter, sans-serif';
+    ctx.fillStyle = C_ANNOT;
+
+    // HV / LV labels
+    LIMBS_X.forEach((lx, i) => {
+      ctx.fillText('HV', lx - LIMB_W / 2 - WIN_W - 3, WIN_Y - 6);
+      ctx.fillText('LV', lx + LIMB_W / 2 + 3, WIN_Y - 6);
+    });
+
+    // N1 / N2 on first limb
+    const arrowX1 = LIMBS_X[0] - LIMB_W / 2 - WIN_W - 18;
+    ctx.fillStyle = 'rgba(217,119,6,0.6)';
+    ctx.fillText('N₁', arrowX1, WIN_Y + WIN_H / 2);
+    ctx.fillText('V₁', arrowX1, WIN_Y + WIN_H / 2 + 16);
+
+    ctx.fillStyle = 'rgba(96,165,250,0.6)';
+    const arrowX2 = LIMBS_X[0] + LIMB_W / 2 + WIN_W + 8;
+    ctx.fillText('N₂', arrowX2, WIN_Y + WIN_H / 2);
+    ctx.fillText('V₂', arrowX2, WIN_Y + WIN_H / 2 + 16);
+
+    // Φ(t) label on top yoke
+    ctx.fillStyle = 'rgba(203,213,225,0.5)';
+    ctx.font = 'italic 11px Inter, sans-serif';
+    ctx.fillText('Φ(t)', (LIMBS_X[0] + LIMBS_X[1]) / 2 - 10, LIMB_Y - YOKE_H - 8);
+
+    // Phase labels
+    ctx.font = '9px Inter, sans-serif';
+    ['A','B','C'].forEach((p, i) => {
+      ctx.fillStyle = 'rgba(203,213,225,0.4)';
+      ctx.fillText(p, LIMBS_X[i] - 3, LIMB_Y + LIMB_H + YOKE_H + 16);
+    });
+
+    // Legend bottom-right
+    const lx = W - 90, ly = H - 52;
+    ctx.font = '9px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(217,119,6,0.85)';
+    ctx.fillRect(lx, ly, 10, 10);
+    ctx.fillStyle = 'rgba(203,213,225,0.5)';
+    ctx.fillText('HV winding', lx + 14, ly + 9);
+    ctx.fillStyle = 'rgba(96,165,250,0.85)';
+    ctx.fillRect(lx, ly + 16, 10, 10);
+    ctx.fillStyle = 'rgba(203,213,225,0.5)';
+    ctx.fillText('LV winding', lx + 14, ly + 25);
+  }
+
+  // Mini waveform (bottom strip)
+  function drawWaveform(t) {
+    const x0 = 24, y0 = H - 48, W2 = W - 48, H2 = 36;
+    ctx.strokeStyle = 'rgba(71,85,105,0.5)';
+    ctx.lineWidth = 0.5;
+    ctx.strokeRect(x0, y0, W2, H2);
+    // Primary (amber)
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(217,119,6,0.6)';
+    ctx.lineWidth = 1.2;
+    for (let px = 0; px <= W2; px++) {
+      const angle = (px / W2) * Math.PI * 4 - t * 1.5;
+      const py = y0 + H2 / 2 - Math.sin(angle) * H2 * 0.4;
+      px === 0 ? ctx.moveTo(x0 + px, py) : ctx.lineTo(x0 + px, py);
+    }
+    ctx.stroke();
+    // Secondary (blue, slight phase lag)
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(96,165,250,0.5)';
+    ctx.lineWidth = 1;
+    for (let px = 0; px <= W2; px++) {
+      const angle = (px / W2) * Math.PI * 4 - t * 1.5 - 0.3;
+      const py = y0 + H2 / 2 - Math.sin(angle) * H2 * 0.3;
+      px === 0 ? ctx.moveTo(x0 + px, py) : ctx.lineTo(x0 + px, py);
+    }
+    ctx.stroke();
+    ctx.font = '8px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(203,213,225,0.35)';
+    ctx.fillText('V₁(t)  V₂(t)', x0 + 4, y0 + 10);
+  }
+
+  let lastT = null;
+  let animTime = 0;
+  const CYCLE = 20; // 20s per cycle
+  const RAD_PER_MS = (2 * Math.PI) / (CYCLE * 1000);
+
+  function frame(ts) {
+    if (!lastT) lastT = ts;
+    const dt = ts - lastT;
+    lastT = ts;
+    if (!prefersReduced) animTime += dt;
+
+    const t = animTime * RAD_PER_MS;
+
+    // Clear
+    ctx.clearRect(0, 0, W, H);
+
+    // BG
+    ctx.fillStyle = C_BG;
+    ctx.fillRect(0, 0, W, H);
+
+    // Background grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.025)';
+    ctx.lineWidth = 0.5;
+    for (let gx = 0; gx < W; gx += 24) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H - 50); ctx.stroke(); }
+    for (let gy = 0; gy < H - 50; gy += 24) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke(); }
+
+    drawFluxPaths(t);
+    drawCore();
+    drawWindings(t);
+    drawAnnotations();
+    drawWaveform(t);
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+// ---- Scroll Reveal ----
+const reveals = document.querySelectorAll('.reveal');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); revObs.unobserve(e.target); }
+  });
+}, { threshold: 0.07 });
+reveals.forEach(el => revObs.observe(el));
+
+// ---- Counter Animation ----
+function countUp(el) {
+  const target = +el.dataset.target;
+  const suffix = el.dataset.suffix || '';
+  const dur = 2000, t0 = performance.now();
+  function tick(t) {
+    const p = Math.min((t - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(e * target) + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const countEls = document.querySelectorAll('[data-target]');
+let counted = false;
+new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !counted) {
+      counted = true;
+      countEls.forEach(el => countUp(el));
+    }
+  });
+}, { threshold: 0.2 }).observe(document.getElementById('overview'));
+
+// Impact counters separately
+const impactEls = document.querySelectorAll('.impact-num[data-target]');
+let impactCounted = false;
+new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !impactCounted) {
+      impactCounted = true;
+      impactEls.forEach(el => countUp(el));
+    }
+  });
+}, { threshold: 0.2 }).observe(document.getElementById('impact'));
+
+// ---- Project Filter ----
+const filterBtns = document.querySelectorAll('.filter-btn');
+const projectCards = document.querySelectorAll('.project-card');
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    projectCards.forEach(card => {
+      const cat = card.dataset.cat;
+      const show = filter === 'all' || cat === filter;
+      card.classList.toggle('hidden', !show);
+      card.style.opacity = show ? '1' : '0';
+      card.style.transform = show ? 'translateY(0)' : 'translateY(10px)';
+    });
+  });
+});
+
+// ---- Publication Search + Filter ----
+const pubSearch = document.getElementById('pub-search');
+const pubFilters = document.querySelectorAll('.pub-filter');
+const pubRows = document.querySelectorAll('#pub-tbody tr');
+const pubCount = document.getElementById('pub-count');
+let activeType = 'all';
+
+function filterPubs() {
+  const query = pubSearch.value.toLowerCase().trim();
+  let visible = 0;
+  pubRows.forEach(row => {
+    const text = row.dataset.text || '';
+    const type = row.dataset.type || '';
+    const matchText = !query || text.includes(query);
+    const matchType = activeType === 'all' || type === activeType;
+    const show = matchText && matchType;
+    row.classList.toggle('pub-hidden', !show);
+    if (show) visible++;
+  });
+  pubCount.innerHTML = `Showing <strong>${visible}</strong> publication${visible !== 1 ? 's' : ''}`;
+}
+
+pubSearch.addEventListener('input', filterPubs);
+pubFilters.forEach(btn => {
+  btn.addEventListener('click', () => {
+    pubFilters.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeType = btn.dataset.pf;
+    filterPubs();
+  });
+});
+</script>
+</body>
+</html>
