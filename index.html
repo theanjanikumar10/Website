@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Electrical Machines Laboratory</title>
+<title>Electrical Machines Laboratory — IIT Bhubaneswar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -95,15 +95,52 @@ button { cursor: pointer; font-family: inherit; }
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-weight: 800;
-  font-size: 15px;
-  color: #111827;
+  gap: 14px;
+  text-decoration: none;
   flex-shrink: 0;
 }
-.nav-logo svg { flex-shrink: 0; }
-.nav-logo span { line-height: 1.2; }
-.nav-logo .lab-abbr { color: #D97706; display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
+.nav-logo-iit {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-logo-iit img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.nav-logo-divider {
+  width: 1px;
+  height: 32px;
+  background: #E5E7EB;
+  flex-shrink: 0;
+}
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.nav-logo-main {
+  font-weight: 800;
+  font-size: 14px;
+  color: #111827;
+  white-space: nowrap;
+}
+.nav-logo-sub {
+  font-size: 11px;
+  font-weight: 700;
+  color: #D97706;
+  display: block;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
 .nav-links {
   display: flex;
   align-items: center;
@@ -130,6 +167,7 @@ button { cursor: pointer; font-family: inherit; }
   border: none;
   transition: background 0.2s;
   letter-spacing: 0.01em;
+  cursor: pointer;
 }
 .nav-cta:hover { background: #B45309; }
 .hamburger {
@@ -170,6 +208,65 @@ button { cursor: pointer; font-family: inherit; }
 }
 .mobile-menu a:hover { color: #D97706; }
 
+/* Dropdown */
+.nav-item { position: relative; }
+.nav-item > a { display: flex; align-items: center; gap: 4px; }
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(250,250,250,0.98);
+  backdrop-filter: blur(12px);
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 8px;
+  min-width: 200px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(-6px);
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  z-index: 1001;
+}
+.nav-item:hover .nav-dropdown,
+.nav-item:focus-within .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown a {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  transition: background 0.15s, color 0.15s;
+  gap: 2px;
+}
+.nav-dropdown a:hover { background: #F4F4F5; color: #111827; }
+.nav-dropdown a span {
+  font-size: 11px;
+  font-weight: 400;
+  color: #94A3B8;
+}
+.nav-dropdown-divider {
+  height: 1px;
+  background: #E5E7EB;
+  margin: 4px 0;
+}
+/* Small arrow indicator on nav link */
+.nav-chevron {
+  width: 10px;
+  height: 10px;
+  color: #94A3B8;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.nav-item:hover .nav-chevron { transform: rotate(180deg); }
+
 /* =========================================
    HERO
 ========================================= */
@@ -207,7 +304,6 @@ button { cursor: pointer; font-family: inherit; }
   position: relative;
   z-index: 2;
 }
-.hero-left {}
 .hero-eyebrow {
   display: flex;
   align-items: center;
@@ -264,6 +360,7 @@ button { cursor: pointer; font-family: inherit; }
   border: none;
   transition: background 0.2s, transform 0.15s;
   letter-spacing: 0.01em;
+  cursor: pointer;
 }
 .btn-filled:hover { background: #B45309; transform: translateY(-1px); }
 .btn-outline {
@@ -282,35 +379,98 @@ button { cursor: pointer; font-family: inherit; }
 }
 .btn-outline:hover { border-color: rgba(226,232,240,0.7); color: #fff; transform: translateY(-1px); }
 
-/* Hero motor vis */
+/* =========================================
+   SYNRM MOTOR CANVAS
+========================================= */
 .hero-right {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
-.motor-wrap {
+.motor-outer-wrap {
   position: relative;
-  width: 460px;
-  height: 460px;
+  width: 480px;
   max-width: 100%;
 }
 #motor-canvas {
-  width: 100%;
-  height: 100%;
   display: block;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+/* Tooltip for motor parts */
+#motor-tooltip {
+  position: absolute;
+  background: rgba(15,23,42,0.95);
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 12px 16px;
+  max-width: 200px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+#motor-tooltip.visible { opacity: 1; }
+#motor-tooltip .tt-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #D97706;
+  margin-bottom: 5px;
+  letter-spacing: 0.04em;
+}
+#motor-tooltip .tt-body {
+  font-size: 11px;
+  color: #94A3B8;
+  line-height: 1.55;
+}
+/* External labels panel */
+.motor-labels-panel {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.motor-label-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(30,41,59,0.6);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  user-select: none;
+}
+.motor-label-item:hover,
+.motor-label-item.active {
+  border-color: #D97706;
+  background: rgba(217,119,6,0.1);
+}
+.motor-label-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.motor-label-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #CBD5E1;
+  letter-spacing: 0.04em;
 }
 
 /* =========================================
    RESEARCH AREAS
 ========================================= */
 #research { background: #fff; }
-.section-header {
-  margin-bottom: 64px;
-}
+.section-header { margin-bottom: 64px; }
 .research-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
 .research-card {
@@ -450,9 +610,7 @@ button { cursor: pointer; font-family: inherit; }
   transition: transform 0.4s ease;
 }
 .project-card:hover .project-img svg { transform: scale(1.05); }
-.project-body {
-  padding: 24px;
-}
+.project-body { padding: 24px; }
 .project-tag {
   display: inline-block;
   font-size: 11px;
@@ -520,26 +678,10 @@ button { cursor: pointer; font-family: inherit; }
   font-size: 14px;
   vertical-align: top;
 }
-.pub-year {
-  font-weight: 700;
-  color: #D97706;
-  white-space: nowrap;
-  width: 60px;
-}
-.pub-title {
-  font-weight: 600;
-  color: #111827;
-  line-height: 1.4;
-}
-.pub-authors {
-  color: #475569;
-  line-height: 1.5;
-}
-.pub-journal {
-  font-style: italic;
-  color: #6B7280;
-  white-space: nowrap;
-}
+.pub-year { font-weight: 700; color: #D97706; white-space: nowrap; width: 60px; }
+.pub-title { font-weight: 600; color: #111827; line-height: 1.4; }
+.pub-authors { color: #475569; line-height: 1.5; }
+.pub-journal { font-style: italic; color: #6B7280; white-space: nowrap; }
 .pub-section-head {
   display: flex;
   justify-content: space-between;
@@ -562,9 +704,9 @@ button { cursor: pointer; font-family: inherit; }
 .btn-secondary:hover { border-color: #D97706; background: #FEF3C7; }
 
 /* =========================================
-   NEWS
+   BLOGS & ANNOUNCEMENTS
 ========================================= */
-#news { background: #F4F4F5; }
+#blogs { background: #F4F4F5; }
 .news-timeline {
   position: relative;
   padding-left: 32px;
@@ -573,9 +715,7 @@ button { cursor: pointer; font-family: inherit; }
 .news-timeline::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 8px;
-  bottom: 0;
+  left: 0; top: 8px; bottom: 0;
   width: 1px;
   background: #E5E7EB;
 }
@@ -586,10 +726,8 @@ button { cursor: pointer; font-family: inherit; }
 .news-item::before {
   content: '';
   position: absolute;
-  left: -37px;
-  top: 5px;
-  width: 10px;
-  height: 10px;
+  left: -37px; top: 5px;
+  width: 10px; height: 10px;
   border-radius: 50%;
   background: #D97706;
   border: 2px solid #F4F4F5;
@@ -650,9 +788,7 @@ button { cursor: pointer; font-family: inherit; }
   justify-content: center;
   position: relative;
 }
-.faculty-message-block {
-  padding-top: 8px;
-}
+.faculty-message-block { padding-top: 8px; }
 .faculty-quote {
   font-size: 20px;
   line-height: 1.65;
@@ -667,32 +803,21 @@ button { cursor: pointer; font-family: inherit; }
   font-size: 15px;
   color: #475569;
   line-height: 1.75;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 .faculty-sig {
   border-top: 1px solid #E5E7EB;
   padding-top: 24px;
+  margin-top: 8px;
 }
-.faculty-name {
-  font-size: 17px;
-  font-weight: 800;
-  color: #111827;
-  margin-bottom: 4px;
-}
-.faculty-title {
-  font-size: 14px;
-  color: #475569;
-  margin-bottom: 4px;
-}
-.faculty-interests {
-  font-size: 13px;
-  color: #94A3B8;
-}
+.faculty-name { font-size: 17px; font-weight: 800; color: #111827; margin-bottom: 4px; }
+.faculty-title { font-size: 14px; color: #475569; margin-bottom: 4px; }
+.faculty-interests { font-size: 13px; color: #94A3B8; }
 
 /* =========================================
    COLLABORATORS
 ========================================= */
-#collaborators { background: #fff; }
+#collaborators { background: #FAFAFA; border-top: 1px solid #E5E7EB; }
 .collab-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -711,17 +836,8 @@ button { cursor: pointer; font-family: inherit; }
   transition: filter 0.3s, opacity 0.3s;
   cursor: default;
 }
-.collab-item:hover {
-  filter: grayscale(0);
-  opacity: 1;
-}
-.collab-logo {
-  font-size: 15px;
-  font-weight: 800;
-  color: #111827;
-  text-align: center;
-  letter-spacing: -0.01em;
-}
+.collab-item:hover { filter: grayscale(0); opacity: 1; }
+.collab-logo { font-size: 15px; font-weight: 800; color: #111827; text-align: center; }
 .collab-logo small {
   display: block;
   font-size: 10px;
@@ -733,54 +849,6 @@ button { cursor: pointer; font-family: inherit; }
 }
 
 /* =========================================
-   QUICK ACCESS
-========================================= */
-#quick-access { background: #0F172A; }
-.qa-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-}
-.qa-card {
-  background: #1E293B;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 12px;
-  padding: 40px 32px;
-  transition: transform 0.25s, background 0.25s;
-  cursor: pointer;
-}
-.qa-card:hover {
-  transform: translateY(-4px);
-  background: #243044;
-}
-.qa-icon {
-  width: 40px;
-  height: 40px;
-  color: #D97706;
-  margin-bottom: 24px;
-}
-.qa-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #F8FAFC;
-  margin-bottom: 10px;
-  letter-spacing: -0.01em;
-}
-.qa-desc {
-  font-size: 14px;
-  color: #64748B;
-  line-height: 1.6;
-}
-.qa-arrow {
-  margin-top: 24px;
-  color: #D97706;
-  font-size: 18px;
-  display: block;
-  transition: transform 0.2s;
-}
-.qa-card:hover .qa-arrow { transform: translateX(4px); }
-
-/* =========================================
    FOOTER
 ========================================= */
 footer {
@@ -790,33 +858,46 @@ footer {
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 48px;
   margin-bottom: 48px;
 }
-.footer-brand {
-  max-width: 300px;
-}
-.footer-logo {
+.footer-brand { max-width: 320px; }
+.footer-logo-wrap {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-weight: 800;
-  font-size: 15px;
-  color: #F9FAFB;
   margin-bottom: 16px;
 }
-.footer-tagline {
+.footer-logo-iit {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.footer-logo-iit img { width: 32px; height: 32px; object-fit: contain; }
+.footer-logo-text {
+  font-weight: 800;
   font-size: 14px;
+  color: #F9FAFB;
+  line-height: 1.3;
+}
+.footer-logo-text small {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
   color: #6B7280;
-  line-height: 1.65;
-  margin-bottom: 24px;
+  letter-spacing: 0.03em;
 }
-.footer-contact p {
-  font-size: 13px;
-  color: #9CA3AF;
-  line-height: 1.8;
-}
+.footer-tagline { font-size: 14px; color: #6B7280; line-height: 1.65; margin-bottom: 20px; }
+.footer-contact p { font-size: 13px; color: #9CA3AF; line-height: 1.8; }
+.footer-contact a { color: #9CA3AF; transition: color 0.2s; }
+.footer-contact a:hover { color: #D97706; }
 .footer-heading {
   font-size: 12px;
   font-weight: 700;
@@ -825,16 +906,8 @@ footer {
   color: #F9FAFB;
   margin-bottom: 16px;
 }
-.footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.footer-links a {
-  font-size: 14px;
-  color: #9CA3AF;
-  transition: color 0.2s;
-}
+.footer-links { display: flex; flex-direction: column; gap: 10px; }
+.footer-links a { font-size: 14px; color: #9CA3AF; transition: color 0.2s; }
 .footer-links a:hover { color: #D97706; }
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.07);
@@ -845,14 +918,8 @@ footer {
   flex-wrap: wrap;
   gap: 16px;
 }
-.footer-copy {
-  font-size: 13px;
-  color: #6B7280;
-}
-.social-icons {
-  display: flex;
-  gap: 16px;
-}
+.footer-copy { font-size: 13px; color: #6B7280; }
+.social-icons { display: flex; gap: 16px; }
 .social-icons a {
   width: 36px;
   height: 36px;
@@ -889,7 +956,6 @@ footer {
   .hero-inner { grid-template-columns: 1fr; padding: 64px 32px; }
   .hero-right { display: none; }
   .projects-grid { grid-template-columns: repeat(2, 1fr); }
-  .qa-grid { grid-template-columns: repeat(2, 1fr); }
   .faculty-inner { grid-template-columns: 1fr; }
   .faculty-portrait { max-width: 200px; }
   .nav-links, .nav-cta { display: none; }
@@ -904,12 +970,12 @@ footer {
   .research-grid { grid-template-columns: 1fr; }
   .highlights-grid { grid-template-columns: repeat(2, 1fr); }
   .projects-grid { grid-template-columns: 1fr; }
-  .qa-grid { grid-template-columns: 1fr; }
   .collab-grid { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr; }
   .pub-table .pub-authors, .pub-table .pub-journal { display: none; }
   .pub-section-head { flex-direction: column; align-items: flex-start; gap: 16px; }
   .mobile-menu { padding: 16px 24px; }
+  .motor-labels-panel { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
   .hero-headline { font-size: 36px; }
@@ -920,7 +986,6 @@ footer {
   .footer-bottom { flex-direction: column; align-items: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .rotor-group { animation: none; }
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 </style>
@@ -932,35 +997,113 @@ footer {
 ========================================= -->
 <nav id="navbar" aria-label="Main navigation">
   <div class="nav-inner">
-    <!-- Logo -->
-    <a href="#" class="nav-logo" aria-label="Electrical Machines Laboratory Home">
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-        <circle cx="18" cy="18" r="16" stroke="#D97706" stroke-width="1.5" fill="none"/>
-        <circle cx="18" cy="18" r="10" stroke="#D97706" stroke-width="1" fill="none" stroke-dasharray="3 3"/>
-        <circle cx="18" cy="18" r="4" fill="#D97706"/>
-        <line x1="18" y1="2" x2="18" y2="8" stroke="#D97706" stroke-width="1.5"/>
-        <line x1="18" y1="28" x2="18" y2="34" stroke="#D97706" stroke-width="1.5"/>
-        <line x1="2" y1="18" x2="8" y2="18" stroke="#D97706" stroke-width="1.5"/>
-        <line x1="28" y1="18" x2="34" y2="18" stroke="#D97706" stroke-width="1.5"/>
-      </svg>
-      <span>Electrical Machines<br><span class="lab-abbr">Laboratory</span></span>
+    <!-- Logo: IIT BBS logo + divider + lab name -->
+    <a href="#hero" class="nav-logo" aria-label="Electrical Machines Laboratory, IIT Bhubaneswar">
+      <div class="nav-logo-iit">
+        <img
+          src="logo.png"
+          alt="IIT Bhubaneswar logo"
+          width="40" height="40"
+        >
+      </div>
+      <div class="nav-logo-divider" aria-hidden="true"></div>
+      <div class="nav-logo-text">
+        <span class="nav-logo-main">Electrical Machines</span>
+        <span class="nav-logo-sub">Laboratory</span>
+      </div>
     </a>
 
     <!-- Desktop Nav -->
-    <ul class="nav-links" role="list">
+    <!-- <ul class="nav-links" role="list">
       <li><a href="#hero">Home</a></li>
-      <li><a href="research.html">Research</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="research.html#ongoing">Projects</a></li>
-      <li><a href="research.html#publications">Publications</a></li>
-      <li><a href="#news">Announcements</a></li>
-      <li><a href="about.html#team">Team</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="#blogs">Blogs</a></li>
       <li><a href="#footer">Contact</a></li>
-    </ul>
+    </ul> -->
+
+    <ul class="nav-links" role="list">
+
+  <li><a href="#hero">Home</a></li>
+
+  <li class="nav-item">
+    <a href="about.html">
+      About
+      <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M2 3.5l3 3 3-3"/>
+      </svg>
+    </a>
+    <div class="nav-dropdown" role="menu">
+      <a href="about.html#overview" role="menuitem">
+        Overview
+        <span>Who we are &amp; our history</span>
+      </a>
+      <a href="about.html#vision" role="menuitem">
+        Vision &amp; Mission
+        <span>Our research philosophy</span>
+      </a>
+      <a href="about.html#faculty-msg" role="menuitem">
+        Faculty Message
+        <span>From Dr. Ankit Dalal</span>
+      </a>
+      <div class="nav-dropdown-divider"></div>
+      <a href="about.html#facilities" role="menuitem">
+        Facilities
+        <span>Lab equipment &amp; infrastructure</span>
+      </a>
+      <a href="about.html#team" role="menuitem">
+        Team
+        <span>Faculty, scholars &amp; students</span>
+      </a>
+      <a href="about.html#achievements" role="menuitem">
+        Milestones
+        <span>Awards &amp; achievements</span>
+      </a>
+    </div>
+  </li>
+
+  <li class="nav-item">
+    <a href="research.html">
+      Research
+      <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M2 3.5l3 3 3-3"/>
+      </svg>
+    </a>
+    <div class="nav-dropdown" role="menu">
+      <a href="research.html#domains" role="menuitem">
+        Research Areas
+        <span>Our core domains</span>
+      </a>
+      <a href="research.html#featured" role="menuitem">
+        Featured Research
+        <span>Deep-dive investigations</span>
+      </a>
+      <a href="research.html#ongoing" role="menuitem">
+        Ongoing Projects
+        <span>Active projects</span>
+      </a>
+      <div class="nav-dropdown-divider"></div>
+      <a href="research.html#publications" role="menuitem">
+        Publications
+        <span>Journals, conferences &amp; patents</span>
+      </a>
+      <!-- <a href="research.html#opportunities" role="menuitem">
+        Join the Lab
+        <span>PhD &amp; M.Tech openings</span>
+      </a> -->
+    </div>
+  </li>
+
+  <li><a href="#blogs">Blogs</a></li>
+  <li><a href="#footer">Contact</a></li>
+
+</ul>
 
     <a href="research.html" class="nav-cta">
       Explore Research
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </a>
 
     <!-- Hamburger -->
@@ -969,19 +1112,14 @@ footer {
     </button>
   </div>
 </nav>
-<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
-<ul class="nav-links" role="list">
-      <li><a href="#hero">Home</a></li>
-      <li><a href="research.html">Research</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="research.html#ongoing">Projects</a></li>
-      <li><a href="research.html#publications">Publications</a></li>
-      <li><a href="#news">Announcements</a></li>
-      <li><a href="about.html#team">Team</a></li>
-      <li><a href="#footer">Contact</a></li>
-    </ul>
 
-  <a href="#research" class="nav-cta" style="margin-top:8px;text-align:center;justify-content:center;">Explore Research</a>
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="#hero">Home</a>
+  <a href="about.html">About</a>
+  <a href="research.html">Research</a>
+  <a href="#blogs">Blogs</a>
+  <a href="#footer">Contact</a>
+  <a href="research.html" class="nav-cta" style="margin-top:8px;text-align:center;justify-content:center;">Explore Research</a>
 </div>
 
 <!-- =========================================
@@ -990,7 +1128,6 @@ footer {
 <section id="hero" aria-label="Hero">
   <div class="hero-grid-bg" aria-hidden="true"></div>
 
-  <!-- Magnetic field SVG overlay -->
   <svg class="hero-field-lines" viewBox="0 0 1400 800" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
     <g stroke="white" stroke-width="0.5" fill="none">
       <ellipse cx="700" cy="400" rx="500" ry="250"/>
@@ -1003,7 +1140,7 @@ footer {
 
   <div class="hero-inner">
     <div class="hero-left">
-      <div class="hero-eyebrow">Electrical Machines Laboratory</div>
+      <div class="hero-eyebrow">Electric Machines Laboratory</div>
       <h1 class="hero-headline">
         Advancing <em>Electric</em> Machine Research
       </h1>
@@ -1011,19 +1148,60 @@ footer {
         Research in electric machines, drives, energy conversion, and sustainable electrification — from fundamental electromagnetics to systems-level integration.
       </p>
       <div class="hero-btns">
-        <a href="#research" class="btn-filled">
+        <a href="research.html" class="btn-filled">
           Explore Research
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
-        <a href="#highlights" class="btn-outline">
-          View Facilities
-        </a>
+        <a href="about.html#facilities" class="btn-outline">View Facilities</a>
       </div>
     </div>
 
-    <div class="hero-right" aria-label="Three-phase induction motor cross-section illustration">
-      <div class="motor-wrap">
-        <canvas id="motor-canvas" width="460" height="460" role="img" aria-label="Animated cross-section of a three-phase induction motor spinning slowly"></canvas>
+    <!-- SynRM Motor Visualisation -->
+    <div class="hero-right" aria-label="Synchronous Reluctance Motor cross-section illustration">
+      <div class="motor-outer-wrap">
+        <canvas id="motor-canvas" width="480" height="480"
+          role="img"
+          aria-label="Interactive cross-section of a Synchronous Reluctance Motor. Hover or click parts to learn more."
+          tabindex="0"
+        ></canvas>
+        <div style="text-align:center; margin-top:14px; margin-bottom:2px;">
+  <span style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#94A3B8;">
+    Synchronous Reluctance Motor (SynRM)
+  </span>
+</div>
+        <div id="motor-tooltip" role="tooltip" aria-live="polite">
+          <div class="tt-title" id="tt-title"></div>
+          <div class="tt-body" id="tt-body"></div>
+        </div>
+        <!-- External labels panel below canvas -->
+        <div class="motor-labels-panel" aria-label="Motor part labels — click to highlight">
+          <div class="motor-label-item" data-part="stator" tabindex="0" role="button" aria-pressed="false">
+            <span class="motor-label-dot" style="background:#475569;"></span>
+            <span class="motor-label-name">Stator Core</span>
+          </div>
+          <div class="motor-label-item" data-part="winding" tabindex="0" role="button" aria-pressed="false">
+            <span class="motor-label-dot" style="background:#D97706;"></span>
+            <span class="motor-label-name">Stator Winding</span>
+          </div>
+          <div class="motor-label-item" data-part="rotor" tabindex="0" role="button" aria-pressed="false">
+            <span class="motor-label-dot" style="background:#334155;"></span>
+            <span class="motor-label-name">Rotor (SynRM)</span>
+          </div>
+          <div class="motor-label-item" data-part="airgap" tabindex="0" role="button" aria-pressed="false">
+            <span class="motor-label-dot" style="background:#60A5FA;border:1px solid #334155;"></span>
+            <span class="motor-label-name">Air Gap</span>
+          </div>
+          <div class="motor-label-item" data-part="barrier" tabindex="0" role="button" aria-pressed="false">
+            <span class="motor-label-dot" style="background:#0D1929;border:1px solid #475569;"></span>
+            <span class="motor-label-name">Flux Barriers</span>
+          </div>
+          <div class="motor-label-item" data-part="shaft" tabindex="0" role="button" aria-pressed="false">
+            <span class="motor-label-dot" style="background:#4B6080;"></span>
+            <span class="motor-label-name">Shaft</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1037,11 +1215,11 @@ footer {
     <div class="section-header">
       <span class="section-eyebrow">Domains of Inquiry</span>
       <h2 class="section-title">Research Areas</h2>
-      <p class="section-sub">Key domains of investigation shaping the future of electric power systems and machine technology.</p>
+      <p class="section-sub">Four core domains of investigation driving innovation in electric power and machine technology.</p>
     </div>
     <div class="research-grid">
 
-      <!-- Card 1: Electric Machines Design -->
+      <!-- Card 1: Electric Machines -->
       <article class="research-card">
         <div class="flux-anim" aria-hidden="true"><div class="flux-line"></div></div>
         <svg class="card-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -1054,25 +1232,28 @@ footer {
           <line x1="34" y1="24" x2="42" y2="24"/>
           <rect x="21" y="3" width="6" height="3" rx="1" fill="currentColor" stroke="none"/>
         </svg>
-        <h3 class="card-title">Electric Machines Design</h3>
-        <p class="card-desc">Analytical and finite-element methods for designing high-efficiency induction motors, permanent magnet machines, and switched reluctance drives.</p>
+        <h3 class="card-title">Electric Machines</h3>
+        <p class="card-desc">Design, analysis, and optimisation of high-efficiency induction motors, permanent magnet machines, synchronous reluctance machines, and special-purpose electric motors using FEM and analytical methods.</p>
       </article>
 
-      <!-- Card 2: Condition Monitoring
+      <!-- Card 2: Electric Vehicles -->
       <article class="research-card">
         <div class="flux-anim" aria-hidden="true"><div class="flux-line"></div></div>
         <svg class="card-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <rect x="6" y="10" width="36" height="24" rx="2"/>
-          <polyline points="10,28 16,18 22,24 28,14 34,20 38,16" stroke-linecap="round" stroke-linejoin="round"/>
-          <line x1="6" y1="38" x2="42" y2="38"/>
-          <line x1="18" y1="34" x2="18" y2="38"/>
-          <line x1="30" y1="34" x2="30" y2="38"/>
+          <rect x="6" y="18" width="36" height="16" rx="4"/>
+          <rect x="12" y="12" width="20" height="8" rx="3"/>
+          <circle cx="14" cy="36" r="5"/>
+          <circle cx="34" cy="36" r="5"/>
+          <line x1="6" y1="26" x2="2" y2="26"/>
+          <line x1="42" y1="26" x2="46" y2="26"/>
+          <line x1="20" y1="18" x2="20" y2="12"/>
+          <line x1="28" y1="18" x2="28" y2="12"/>
         </svg>
-        <h3 class="card-title">Condition Monitoring</h3>
-        <p class="card-desc">Signal processing, MCSA, and machine-learning algorithms for fault detection in bearings, windings, and rotor bars under operational conditions.</p>
-      </article> -->
+        <h3 class="card-title">Electric Vehicles</h3>
+        <p class="card-desc">Traction motor design, regenerative braking systems, battery-motor co-optimisation, and thermal management for next-generation EV powertrains — from two-wheelers to heavy traction.</p>
+      </article>
 
-      <!-- Card 3: Motor Drives -->
+      <!-- Card 3: Motor Control & Drives -->
       <article class="research-card">
         <div class="flux-anim" aria-hidden="true"><div class="flux-line"></div></div>
         <svg class="card-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -1083,8 +1264,8 @@ footer {
           <circle cx="24" cy="24" r="2" fill="currentColor" stroke="none"/>
           <rect x="20" y="28" width="8" height="4" rx="1"/>
         </svg>
-        <h3 class="card-title">Motor Control & Drives</h3>
-        <p class="card-desc">Advanced control algorithms including field-oriented control, direct torque control, and model-predictive control for precision variable-speed drives.</p>
+        <h3 class="card-title">Motor Control &amp; Drives</h3>
+        <p class="card-desc">Advanced control algorithms including field-oriented control, direct torque control, and model-predictive control for precision variable-speed drives, sensorless operation, and real-time embedded implementation.</p>
       </article>
 
       <!-- Card 4: Power Electronics -->
@@ -1104,44 +1285,8 @@ footer {
           <line x1="24" y1="32" x2="24" y2="37"/>
         </svg>
         <h3 class="card-title">Power Electronics</h3>
-        <p class="card-desc">Wide-bandgap device applications, multilevel converter topologies, and EMI mitigation strategies for high-frequency power conversion systems.</p>
+        <p class="card-desc">Wide-bandgap device applications (SiC, GaN), multilevel converter topologies, EMI mitigation, and high-frequency power conversion systems for motor drives and energy-conversion applications.</p>
       </article>
-
-      <!-- Card 5: Electric Vehicles -->
-      <article class="research-card">
-        <div class="flux-anim" aria-hidden="true"><div class="flux-line"></div></div>
-        <svg class="card-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <rect x="6" y="18" width="36" height="16" rx="4"/>
-          <rect x="12" y="12" width="20" height="8" rx="3"/>
-          <circle cx="14" cy="36" r="5"/>
-          <circle cx="34" cy="36" r="5"/>
-          <line x1="6" y1="26" x2="2" y2="26"/>
-          <line x1="42" y1="26" x2="46" y2="26"/>
-          <line x1="20" y1="18" x2="20" y2="12"/>
-          <line x1="28" y1="18" x2="28" y2="12"/>
-        </svg>
-        <h3 class="card-title">Electric Vehicles</h3>
-        <p class="card-desc">Traction motor design, regenerative braking systems, battery-motor co-optimization, and thermal management for next-generation EV powertrains.</p>
-      </article>
-
-      <!-- Card 6: Renewable Energy
-      <article class="research-card">
-        <div class="flux-anim" aria-hidden="true"><div class="flux-line"></div></div>
-        <svg class="card-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <circle cx="24" cy="24" r="6"/>
-          <line x1="24" y1="4" x2="24" y2="12"/>
-          <line x1="24" y1="36" x2="24" y2="44"/>
-          <line x1="4" y1="24" x2="12" y2="24"/>
-          <line x1="36" y1="24" x2="44" y2="24"/>
-          <line x1="9.5" y1="9.5" x2="15.3" y2="15.3"/>
-          <line x1="32.7" y1="32.7" x2="38.5" y2="38.5"/>
-          <line x1="38.5" y1="9.5" x2="32.7" y2="15.3"/>
-          <line x1="15.3" y1="32.7" x2="9.5" y2="38.5"/>
-          <path d="M18 30 Q14 16 24 14 Q34 12 30 30" fill="currentColor" fill-opacity="0.15" stroke="currentColor"/>
-        </svg>
-        <h3 class="card-title">Renewable Energy Integration</h3>
-        <p class="card-desc">Grid-connected generator control, MPPT strategies for wind and solar, power quality, and microgrid stability for high renewable penetration scenarios.</p>
-      </article> -->
 
     </div>
   </div>
@@ -1196,9 +1341,8 @@ footer {
       <!-- Project 1 -->
       <article class="project-card">
         <div class="project-img">
-          <svg viewBox="0 0 560 315" xmlns="http://www.w3.org/2000/svg" aria-label="FEM flux density contour map of motor cross-section">
+          <svg viewBox="0 0 560 315" xmlns="http://www.w3.org/2000/svg" aria-label="FEM flux density contour map">
             <rect width="560" height="315" fill="#0F172A"/>
-            <!-- FEM contour visualization -->
             <g opacity="0.8">
               <circle cx="280" cy="157" r="120" fill="none" stroke="#D97706" stroke-width="1" opacity="0.3"/>
               <circle cx="280" cy="157" r="100" fill="none" stroke="#D97706" stroke-width="1" opacity="0.4"/>
@@ -1207,24 +1351,16 @@ footer {
               <circle cx="280" cy="157" r="40" fill="#1E3A5F" stroke="#60A5FA" stroke-width="1" opacity="0.7"/>
               <circle cx="280" cy="157" r="20" fill="#1E3A5F" stroke="#93C5FD" stroke-width="1"/>
             </g>
-            <!-- Grid pattern -->
             <g stroke="#1E293B" stroke-width="0.5" opacity="0.6">
-              <line x1="0" y1="45" x2="560" y2="45"/>
-              <line x1="0" y1="90" x2="560" y2="90"/>
-              <line x1="0" y1="135" x2="560" y2="135"/>
-              <line x1="0" y1="180" x2="560" y2="180"/>
-              <line x1="0" y1="225" x2="560" y2="225"/>
-              <line x1="0" y1="270" x2="560" y2="270"/>
-              <line x1="70" y1="0" x2="70" y2="315"/>
-              <line x1="140" y1="0" x2="140" y2="315"/>
-              <line x1="210" y1="0" x2="210" y2="315"/>
-              <line x1="280" y1="0" x2="280" y2="315"/>
-              <line x1="350" y1="0" x2="350" y2="315"/>
-              <line x1="420" y1="0" x2="420" y2="315"/>
+              <line x1="0" y1="45" x2="560" y2="45"/><line x1="0" y1="90" x2="560" y2="90"/>
+              <line x1="0" y1="135" x2="560" y2="135"/><line x1="0" y1="180" x2="560" y2="180"/>
+              <line x1="0" y1="225" x2="560" y2="225"/><line x1="0" y1="270" x2="560" y2="270"/>
+              <line x1="70" y1="0" x2="70" y2="315"/><line x1="140" y1="0" x2="140" y2="315"/>
+              <line x1="210" y1="0" x2="210" y2="315"/><line x1="280" y1="0" x2="280" y2="315"/>
+              <line x1="350" y1="0" x2="350" y2="315"/><line x1="420" y1="0" x2="420" y2="315"/>
               <line x1="490" y1="0" x2="490" y2="315"/>
             </g>
             <text x="16" y="24" font-size="10" fill="#64748B" font-family="Inter, sans-serif">FEM — Flux Density Contour</text>
-            <!-- Color scale bar -->
             <defs>
               <linearGradient id="fscale" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="#93C5FD"/>
@@ -1239,9 +1375,9 @@ footer {
         </div>
         <div class="project-body">
           <span class="project-tag">Machine Design</span>
-          <h3 class="project-title">High-Torque Density PMSM for Industrial Drives</h3>
-          <p class="project-desc">FEM-optimized interior permanent magnet motor targeting 95%+ efficiency across a wide speed range using grain-oriented silicon steel.</p>
-          <a href="#" class="project-link" aria-label="Read more about High-Torque Density PMSM project">
+          <h3 class="project-title">High-Torque Density SynRM for Industrial Drives</h3>
+          <p class="project-desc">FEM-optimised synchronous reluctance motor targeting 95%+ efficiency across a wide speed range using barrier geometry optimisation and grain-oriented silicon steel.</p>
+          <a href="research.html#ongoing" class="project-link" aria-label="Read more about High-Torque Density SynRM project">
             Read More
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </a>
@@ -1254,24 +1390,16 @@ footer {
           <svg viewBox="0 0 560 315" xmlns="http://www.w3.org/2000/svg" aria-label="Torque-speed characteristic curve">
             <rect width="560" height="315" fill="#0F172A"/>
             <g stroke="#1E293B" stroke-width="0.5" opacity="0.6">
-              <line x1="0" y1="63" x2="560" y2="63"/>
-              <line x1="0" y1="126" x2="560" y2="126"/>
-              <line x1="0" y1="189" x2="560" y2="189"/>
-              <line x1="0" y1="252" x2="560" y2="252"/>
-              <line x1="93" y1="0" x2="93" y2="315"/>
-              <line x1="186" y1="0" x2="186" y2="315"/>
-              <line x1="279" y1="0" x2="279" y2="315"/>
-              <line x1="372" y1="0" x2="372" y2="315"/>
+              <line x1="0" y1="63" x2="560" y2="63"/><line x1="0" y1="126" x2="560" y2="126"/>
+              <line x1="0" y1="189" x2="560" y2="189"/><line x1="0" y1="252" x2="560" y2="252"/>
+              <line x1="93" y1="0" x2="93" y2="315"/><line x1="186" y1="0" x2="186" y2="315"/>
+              <line x1="279" y1="0" x2="279" y2="315"/><line x1="372" y1="0" x2="372" y2="315"/>
               <line x1="465" y1="0" x2="465" y2="315"/>
             </g>
-            <!-- Axes -->
             <line x1="60" y1="260" x2="510" y2="260" stroke="#334155" stroke-width="1.5"/>
             <line x1="60" y1="30" x2="60" y2="260" stroke="#334155" stroke-width="1.5"/>
-            <!-- Torque-speed curve -->
             <path d="M60,50 C140,45 200,90 240,140 C270,180 310,240 500,255" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round"/>
-            <!-- Current curve -->
             <path d="M60,220 C100,200 180,170 240,160 C320,155 400,200 500,230" fill="none" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="5 3"/>
-            <!-- Labels -->
             <text x="285" y="278" font-size="10" fill="#64748B" font-family="Inter, sans-serif" text-anchor="middle">Speed (rpm)</text>
             <text x="20" y="157" font-size="10" fill="#64748B" font-family="Inter, sans-serif" transform="rotate(-90 20 157)">Torque (Nm)</text>
             <text x="16" y="24" font-size="10" fill="#64748B" font-family="Inter, sans-serif">Torque-Speed Characteristic</text>
@@ -1282,10 +1410,10 @@ footer {
           </svg>
         </div>
         <div class="project-body">
-          <span class="project-tag">Motor Drives</span>
+          <span class="project-tag">Motor Control &amp; Drives</span>
           <h3 class="project-title">Adaptive Field-Weakening Control for Wide-Speed EV Motors</h3>
-          <p class="project-desc">Real-time adaptive control strategy extending constant-power speed range of IPMSM drives with online parameter estimation.</p>
-          <a href="#" class="project-link" aria-label="Read more about Adaptive Field-Weakening Control project">
+          <p class="project-desc">Real-time adaptive control strategy extending constant-power speed range of IPMSM drives with online parameter estimation for EV traction.</p>
+          <a href="research.html#ongoing" class="project-link" aria-label="Read more about Adaptive Field-Weakening Control project">
             Read More
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </a>
@@ -1295,53 +1423,36 @@ footer {
       <!-- Project 3 -->
       <article class="project-card">
         <div class="project-img">
-          <svg viewBox="0 0 560 315" xmlns="http://www.w3.org/2000/svg" aria-label="Vibration signal spectrum for bearing fault detection">
+          <svg viewBox="0 0 560 315" xmlns="http://www.w3.org/2000/svg" aria-label="Power converter waveform">
             <rect width="560" height="315" fill="#0F172A"/>
             <g stroke="#1E293B" stroke-width="0.5" opacity="0.6">
-              <line x1="0" y1="63" x2="560" y2="63"/>
-              <line x1="0" y1="126" x2="560" y2="126"/>
-              <line x1="0" y1="189" x2="560" y2="189"/>
-              <line x1="0" y1="252" x2="560" y2="252"/>
-              <line x1="93" y1="0" x2="93" y2="315"/>
-              <line x1="186" y1="0" x2="186" y2="315"/>
-              <line x1="279" y1="0" x2="279" y2="315"/>
-              <line x1="372" y1="0" x2="372" y2="315"/>
+              <line x1="0" y1="63" x2="560" y2="63"/><line x1="0" y1="126" x2="560" y2="126"/>
+              <line x1="0" y1="189" x2="560" y2="189"/><line x1="0" y1="252" x2="560" y2="252"/>
+              <line x1="93" y1="0" x2="93" y2="315"/><line x1="186" y1="0" x2="186" y2="315"/>
+              <line x1="279" y1="0" x2="279" y2="315"/><line x1="372" y1="0" x2="372" y2="315"/>
               <line x1="465" y1="0" x2="465" y2="315"/>
             </g>
             <line x1="60" y1="260" x2="510" y2="260" stroke="#334155" stroke-width="1.5"/>
             <line x1="60" y1="30" x2="60" y2="260" stroke="#334155" stroke-width="1.5"/>
-            <!-- FFT bars -->
-            <g fill="#1E3A5F">
-              <rect x="75" y="220" width="6" height="40"/>
-              <rect x="90" y="180" width="6" height="80"/>
-              <rect x="105" y="240" width="6" height="20"/>
-              <rect x="140" y="200" width="6" height="60"/>
-              <rect x="170" y="100" width="6" height="160" fill="#D97706"/>
-              <rect x="200" y="230" width="6" height="30"/>
-              <rect x="230" y="210" width="6" height="50"/>
-              <rect x="260" y="50" width="6" height="210" fill="#D97706"/>
-              <rect x="290" y="240" width="6" height="20"/>
-              <rect x="320" y="220" width="6" height="40"/>
-              <rect x="350" y="190" width="6" height="70" fill="#B45309" opacity="0.8"/>
-              <rect x="380" y="230" width="6" height="30"/>
-              <rect x="410" y="210" width="6" height="50"/>
-              <rect x="440" y="245" width="6" height="15"/>
-              <rect x="470" y="235" width="6" height="25"/>
-              <rect x="500" y="250" width="6" height="10"/>
-            </g>
-            <text x="16" y="24" font-size="10" fill="#64748B" font-family="Inter, sans-serif">MCSA Spectrum — Bearing Fault</text>
-            <text x="285" y="278" font-size="10" fill="#64748B" font-family="Inter, sans-serif" text-anchor="middle">Frequency (Hz)</text>
-            <text x="20" y="157" font-size="10" fill="#64748B" font-family="Inter, sans-serif" transform="rotate(-90 20 157)">Amplitude (dB)</text>
-            <!-- Fault marker -->
-            <line x1="173" y1="100" x2="173" y2="40" stroke="#D97706" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <text x="175" y="35" font-size="8" fill="#D97706" font-family="Inter, sans-serif">BPFO</text>
+            <!-- SiC switching waveform -->
+            <polyline points="60,230 90,230 90,80 130,80 130,230 170,230 170,80 210,80 210,230 250,230 250,80 290,80 290,230 330,230 330,80 370,80 370,230 410,230 410,80 450,80 450,230 510,230"
+              fill="none" stroke="#D97706" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Filtered output -->
+            <path d="M60,155 C130,152 200,153 280,155 C360,157 430,154 510,155" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 3"/>
+            <text x="16" y="24" font-size="10" fill="#64748B" font-family="Inter, sans-serif">SiC Gate Drive — Switching Waveform</text>
+            <text x="285" y="278" font-size="10" fill="#64748B" font-family="Inter, sans-serif" text-anchor="middle">Time (µs)</text>
+            <text x="20" y="157" font-size="10" fill="#64748B" font-family="Inter, sans-serif" transform="rotate(-90 20 157)">Voltage (V)</text>
+            <rect x="350" y="30" width="8" height="4" fill="#D97706"/>
+            <text x="362" y="36" font-size="9" fill="#94A3B8" font-family="Inter, sans-serif">Switched</text>
+            <rect x="350" y="46" width="8" height="2" fill="#60A5FA"/>
+            <text x="362" y="52" font-size="9" fill="#94A3B8" font-family="Inter, sans-serif">Filtered</text>
           </svg>
         </div>
         <div class="project-body">
-          <span class="project-tag">Condition Monitoring</span>
-          <h3 class="project-title">ML-Based Bearing Fault Detection via Motor Current Signature</h3>
-          <p class="project-desc">Non-invasive fault identification using stator current spectral analysis combined with convolutional neural networks for early-stage defect recognition.</p>
-          <a href="#" class="project-link" aria-label="Read more about ML-Based Bearing Fault Detection project">
+          <span class="project-tag">Power Electronics</span>
+          <h3 class="project-title">SiC-Based High-Frequency Converter for EV Battery Charging</h3>
+          <p class="project-desc">Wide-bandgap SiC MOSFET bidirectional DC-DC converter targeting 98% peak efficiency and &lt;3% THD for onboard and fast-charge EV applications.</p>
+          <a href="research.html#ongoing" class="project-link" aria-label="Read more about SiC Converter project">
             Read More
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </a>
@@ -1362,7 +1473,7 @@ footer {
         <span class="section-eyebrow">Scholarly Output</span>
         <h2 class="section-title">Recent Publications</h2>
       </div>
-      <a href="#" class="btn-secondary">
+      <a href="research.html#publications" class="btn-secondary">
         View All Publications
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </a>
@@ -1379,33 +1490,33 @@ footer {
       <tbody>
         <tr>
           <td class="pub-year">2024</td>
-          <td class="pub-title">Optimal Stator Slot Shape Design for Torque Ripple Minimization in IPMSM Using Response Surface Methodology</td>
-          <td class="pub-authors">R. Kumar, S. Mohanty, A. Patra</td>
+          <td class="pub-title">Optimal Rotor Barrier Design for Torque Ripple Minimisation in SynRM Using Response Surface Methodology</td>
+          <td class="pub-authors">A. Dalal, S. Mohanty</td>
           <td class="pub-journal">IEEE Trans. Energy Conv.</td>
         </tr>
         <tr>
           <td class="pub-year">2024</td>
-          <td class="pub-title">Online Broken Rotor Bar Detection in Squirrel Cage Induction Motors using Wavelet-SVM Classifier</td>
-          <td class="pub-authors">A. Das, P. Nanda, R. Kumar</td>
-          <td class="pub-journal">Mech. Syst. Signal Process.</td>
-        </tr>
-        <tr>
-          <td class="pub-year">2023</td>
-          <td class="pub-title">Model Predictive Torque Control with Reduced Switching Frequency for Three-Level NPC Inverter Fed PMSM Drives</td>
-          <td class="pub-authors">S. Mohanty, K. Rout, A. Das</td>
+          <td class="pub-title">Sensorless FOC of PMSM for EV Traction Using Extended Kalman Filter</td>
+          <td class="pub-authors">A. Dalal, P. Kumar</td>
           <td class="pub-journal">IEEE Trans. Ind. Electron.</td>
         </tr>
         <tr>
           <td class="pub-year">2023</td>
-          <td class="pub-title">Thermal Analysis and Cooling System Design for High-Power Density Axial Flux Machine in EV Application</td>
-          <td class="pub-authors">P. Behera, R. Kumar, T. Sahu</td>
+          <td class="pub-title">Model Predictive Torque Control with Reduced Switching for NPC Inverter-Fed PMSM Drives</td>
+          <td class="pub-authors">A. Dalal, K. Rout</td>
+          <td class="pub-journal">IEEE Trans. Ind. Electron.</td>
+        </tr>
+        <tr>
+          <td class="pub-year">2023</td>
+          <td class="pub-title">Thermal Analysis and Cooling Design for High-Power-Density Axial Flux Machine in EV</td>
+          <td class="pub-authors">A. Dalal, P. Behera</td>
           <td class="pub-journal">Appl. Therm. Eng.</td>
         </tr>
         <tr>
           <td class="pub-year">2022</td>
-          <td class="pub-title">Grid Integration of DFIG-Based Wind Energy Conversion System Under Unbalanced Voltage Conditions</td>
-          <td class="pub-authors">A. Patra, S. Mohanty, P. Nanda</td>
-          <td class="pub-journal">Renew. Energy</td>
+          <td class="pub-title">SiC-Based Bidirectional DC-DC Converter with MPC for EV Battery Charging</td>
+          <td class="pub-authors">A. Dalal, S. Panda</td>
+          <td class="pub-journal">IEEE Trans. Power Electron.</td>
         </tr>
       </tbody>
     </table>
@@ -1413,44 +1524,44 @@ footer {
 </section>
 
 <!-- =========================================
-     NEWS
+     BLOGS & ANNOUNCEMENTS
 ========================================= -->
-<section id="news" class="section-pad">
+<section id="blogs" class="section-pad">
   <div class="container">
     <div class="section-header">
       <span class="section-eyebrow">Latest Updates</span>
-      <h2 class="section-title">News &amp; Announcements</h2>
+      <h2 class="section-title">Blogs &amp; Announcements</h2>
     </div>
     <div class="news-timeline" role="list">
 
       <div class="news-item" role="listitem">
         <div class="news-date">June 2025</div>
-        <div class="news-title">International Workshop on Electric Machine Design <span class="news-badge">Workshop</span></div>
-        <p class="news-desc">A two-day intensive workshop on FEM-based machine design, co-hosted with ETH Zürich researchers. Registration now open for graduate students and industry professionals.</p>
+        <div class="news-title">Workshop on FEM-Based SynRM Design <span class="news-badge">Workshop</span></div>
+        <p class="news-desc">A two-day intensive workshop on finite-element methods for synchronous reluctance motor design, focusing on barrier geometry optimisation and efficiency mapping. Open for graduate students and industry engineers.</p>
       </div>
 
       <div class="news-item" role="listitem">
         <div class="news-date">May 2025</div>
         <div class="news-title">Best Paper Award — IEEE IEMDC 2025 <span class="news-badge">Award</span></div>
-        <p class="news-desc">Our paper on adaptive field-weakening control received the Best Technical Paper Award at the IEEE International Electric Machines and Drives Conference, Chicago.</p>
+        <p class="news-desc">Our paper on adaptive field-weakening control for EV traction motors received the Best Technical Paper Award at the IEEE International Electric Machines and Drives Conference, Chicago.</p>
       </div>
 
       <div class="news-item" role="listitem">
         <div class="news-date">March 2025</div>
-        <div class="news-title">Industry Partnership with Power Systems Ltd. <span class="news-badge" style="background:#15803D;">Partnership</span></div>
-        <p class="news-desc">A new three-year collaborative research agreement has been signed for development of high-efficiency traction motors for industrial applications.</p>
+        <div class="news-title">Industry Partnership for EV Motor Development <span class="news-badge" style="background:#15803D;">Partnership</span></div>
+        <p class="news-desc">A new three-year sponsored research agreement has been signed for development of high-efficiency traction motors for electric two-wheelers, with prototype testing planned at the IIT Bhubaneswar campus laboratory.</p>
       </div>
 
       <div class="news-item" role="listitem">
         <div class="news-date">January 2025</div>
-        <div class="news-title">Lab Seminar: Wide-Bandgap Devices in Motor Drives</div>
-        <p class="news-desc">Prof. Alok Nanda delivered an invited seminar on SiC and GaN device applications in variable-speed drive systems. Slides available in the resources section.</p>
+        <div class="news-title">Blog: Why SynRM is the Future of Industrial Motor Drives</div>
+        <p class="news-desc">Dr. Ankit Dalal writes about the growing case for synchronous reluctance machines in industrial variable-speed drive applications — the physics, the tradeoffs, and the design challenges. Read on the lab blog.</p>
       </div>
 
       <div class="news-item" role="listitem">
         <div class="news-date">November 2024</div>
-        <div class="news-title">IEEE ECCE 2024 — Three Papers Presented <span class="news-badge">Conference</span></div>
-        <p class="news-desc">Lab members presented three accepted papers at the IEEE Energy Conversion Congress and Exposition in Nashville on condition monitoring, PMSM control, and EV thermal management.</p>
+        <div class="news-title">IEEE ECCE 2024 — Two Papers Presented <span class="news-badge">Conference</span></div>
+        <p class="news-desc">Lab members presented two accepted papers at IEEE ECCE Nashville on SiC converter design and PMSM field-weakening control. Both papers are available in IEEE Xplore.</p>
       </div>
 
     </div>
@@ -1464,51 +1575,44 @@ footer {
   <div class="container">
     <div class="faculty-inner">
       <div>
-        <div class="faculty-portrait" aria-label="Portrait placeholder of laboratory head">
-          <!-- Illustrated portrait placeholder -->
+        <div class="faculty-portrait" aria-label="Portrait placeholder of Dr. Ankit Dalal">
           <svg viewBox="0 0 280 373" xmlns="http://www.w3.org/2000/svg" width="280" aria-hidden="true">
             <rect width="280" height="373" fill="#1E293B"/>
-            <!-- Background grid -->
             <g stroke="#243044" stroke-width="0.5">
-              <line x1="0" y1="50" x2="280" y2="50"/>
-              <line x1="0" y1="100" x2="280" y2="100"/>
-              <line x1="0" y1="150" x2="280" y2="150"/>
-              <line x1="0" y1="200" x2="280" y2="200"/>
-              <line x1="0" y1="250" x2="280" y2="250"/>
-              <line x1="0" y1="300" x2="280" y2="300"/>
+              <line x1="0" y1="50" x2="280" y2="50"/><line x1="0" y1="100" x2="280" y2="100"/>
+              <line x1="0" y1="150" x2="280" y2="150"/><line x1="0" y1="200" x2="280" y2="200"/>
+              <line x1="0" y1="250" x2="280" y2="250"/><line x1="0" y1="300" x2="280" y2="300"/>
               <line x1="0" y1="350" x2="280" y2="350"/>
-              <line x1="56" y1="0" x2="56" y2="373"/>
-              <line x1="112" y1="0" x2="112" y2="373"/>
-              <line x1="168" y1="0" x2="168" y2="373"/>
-              <line x1="224" y1="0" x2="224" y2="373"/>
+              <line x1="56" y1="0" x2="56" y2="373"/><line x1="112" y1="0" x2="112" y2="373"/>
+              <line x1="168" y1="0" x2="168" y2="373"/><line x1="224" y1="0" x2="224" y2="373"/>
             </g>
-            <!-- Silhouette -->
             <ellipse cx="140" cy="110" rx="52" ry="58" fill="#334155"/>
             <ellipse cx="140" cy="260" rx="90" ry="120" fill="#334155"/>
-            <!-- Accent line bottom -->
             <rect x="0" y="370" width="280" height="3" fill="#D97706"/>
-            <!-- Name plate -->
-            <rect x="16" y="330" width="180" height="30" rx="2" fill="#0F172A" fill-opacity="0.7"/>
-            <text x="28" y="351" font-size="13" fill="#F8FAFC" font-family="Inter, sans-serif" font-weight="700">Prof. R. Kumar</text>
+            <rect x="16" y="330" width="210" height="30" rx="2" fill="#0F172A" fill-opacity="0.7"/>
+            <text x="28" y="351" font-size="13" fill="#F8FAFC" font-family="Inter, sans-serif" font-weight="700">Dr. Ankit Dalal</text>
           </svg>
         </div>
       </div>
       <div class="faculty-message-block">
-        <span class="section-eyebrow">From the Lab Head</span>
-        <h2 class="section-title">A Message from the Professor</h2>
+        <span class="section-eyebrow">From the Lab In-Charge</span>
+        <h2 class="section-title">A Message from Laboratory Head </Head></h2>
         <blockquote class="faculty-quote">
-          "The future of sustainable energy depends on our ability to design machines that extract maximum utility from every watt — that challenge drives everything we do here."
+          "Electric machines are not merely electrical to mechanical energy conversion devices — they are the silent engines of our sustainable future. Every watt saved in a motor, every kilogram reduced in a traction drive, every millisecond shaved from a control response brings us measurably closer to a decarbonised world."
         </blockquote>
         <p class="faculty-body">
-          Our laboratory sits at the convergence of classical electromagnetic theory and emerging computational methods. We apply finite-element analysis, signal processing, and real-time digital simulation to problems that matter: motors that last longer, drives that waste less, and generators that integrate cleanly with tomorrow's grids.
+          The global transition to sustainable energy is not an abstract challenge — it is an engineering problem, and electric machines sit at its very centre. Whether it is the traction motor in an EV replacing a combustion engine, the wind generator feeding clean power into the grid, or the industrial drive that cuts a factory's energy bill by a third, the quality of our machine design and control directly determines how fast and how far that transition goes.
         </p>
         <p class="faculty-body">
-          We welcome collaborations with industry and with peer institutions. If you are a student seeking graduate research opportunities, or an engineer looking to solve a difficult machine design problem, I invite you to reach out.
+          Our research group at IIT Bhubaneswar is focused on the machines and drives that make this possible. We work on synchronous reluctance machines, permanent magnet motors, and advanced power electronic converters — designing for efficiency, reliability, and real-world deployability. A particular interest of mine is the intersection of precision motor control with emerging domains: biomedical actuators, prosthetics, and miniaturised drive systems where performance constraints are extreme and the human impact is direct.
         </p>
+        <!-- <p class="faculty-body">
+          If you are a student who finds this work meaningful, or an engineer or institution looking to collaborate, I encourage you to reach out. The problems worth solving always benefit from more minds.
+        </p> -->
         <div class="faculty-sig">
           <div class="faculty-name">Dr. Ankit Dalal</div>
-          <div class="faculty-title">Electrical Machines Laboratory. Assnt. Professor, Dept. of Electrical Engineering</div>
-          <div class="faculty-interests">Research Interests: PMSM design, motor drives, condition monitoring, renewable energy systems</div>
+          <div class="faculty-title">Assistant Professor &amp; Laboratory In-Charge · Dept. of Electrical Engineering, IIT Bhubaneswar</div>
+          <div class="faculty-interests">Research Interests: Electric motors · Motor control · Biomedical devices · Power electronics · EV drives</div>
         </div>
       </div>
     </div>
@@ -1518,113 +1622,24 @@ footer {
 <!-- =========================================
      COLLABORATORS
 ========================================= -->
-<section id="collaborators" class="section-pad" style="background:#FAFAFA; border-top: 1px solid #E5E7EB;">
+<section id="collaborators" class="section-pad">
   <div class="container">
     <div class="section-header">
-      <span class="section-eyebrow">Partners & Affiliates</span>
+      <span class="section-eyebrow">Partners &amp; Affiliates</span>
       <h2 class="section-title">Collaborators</h2>
       <p class="section-sub">Industry and academic partners enabling our research mission.</p>
     </div>
     <div class="collab-grid" role="list">
-      <div class="collab-item" role="listitem">
-        <div class="collab-logo">BHEL<small>Power Systems</small></div>
-      </div>
-      <div class="collab-item" role="listitem">
-        <div class="collab-logo">TATA<small>Power</small></div>
-      </div>
-      <div class="collab-item" role="listitem">
-        <div class="collab-logo">IIT<small>Bombay</small></div>
-      </div>
-      <div class="collab-item" role="listitem">
-        <div class="collab-logo">DRDO<small>Electronics</small></div>
-      </div>
-      <div class="collab-item" role="listitem">
-        <div class="collab-logo">ABB<small>Drives</small></div>
-      </div>
-      <div class="collab-item" role="listitem">
-        <div class="collab-logo">SIEMENS<small>Energy</small></div>
-      </div>
-      <div class="collab-item" role="listitem">
-        <div class="collab-logo">IITK<small>Power Elec.</small></div>
-      </div>
-      <div class="collab-item" role="listitem">
-        <div class="collab-logo">CSIR<small>CEERI</small></div>
-      </div>
-      <div class="collab-item" role="listitem">
-        <div class="collab-logo">CPCB<small>Industry</small></div>
-      </div>
-      <div class="collab-item" role="listitem">
-        <div class="collab-logo">NTPC<small>Grid Systems</small></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =========================================
-     QUICK ACCESS
-========================================= -->
-<section id="quick-access" class="section-pad">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-eyebrow" style="color:#D97706;">Navigate</span>
-      <h2 class="section-title" style="color:#F8FAFC;">Quick Access</h2>
-    </div>
-    <div class="qa-grid">
-
-      <a href="#highlights" class="qa-card" aria-label="Go to Facilities section">
-        <svg class="qa-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <rect x="4" y="16" width="32" height="20" rx="2"/>
-          <rect x="10" y="4" width="20" height="14" rx="2"/>
-          <line x1="20" y1="16" x2="20" y2="36"/>
-          <line x1="4" y1="26" x2="36" y2="26"/>
-        </svg>
-        <div class="qa-title">Facilities</div>
-        <div class="qa-desc">State-of-the-art test rigs, power analyzers, and real-time simulation platforms.</div>
-        <span class="qa-arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a href="#projects" class="qa-card" aria-label="Go to Projects section">
-        <svg class="qa-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <circle cx="20" cy="20" r="14" stroke-dasharray="4 3"/>
-          <circle cx="20" cy="20" r="8"/>
-          <circle cx="20" cy="20" r="3" fill="currentColor" stroke="none"/>
-          <line x1="20" y1="4" x2="20" y2="12"/>
-          <line x1="20" y1="28" x2="20" y2="36"/>
-          <line x1="4" y1="20" x2="12" y2="20"/>
-          <line x1="28" y1="20" x2="36" y2="20"/>
-        </svg>
-        <div class="qa-title">Projects</div>
-        <div class="qa-desc">Ongoing research initiatives in machine design, drives, and condition monitoring.</div>
-        <span class="qa-arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a href="#publications" class="qa-card" aria-label="Go to Publications section">
-        <svg class="qa-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <rect x="6" y="4" width="28" height="36" rx="2"/>
-          <line x1="12" y1="14" x2="28" y2="14"/>
-          <line x1="12" y1="20" x2="28" y2="20"/>
-          <line x1="12" y1="26" x2="22" y2="26"/>
-        </svg>
-        <div class="qa-title">Publications</div>
-        <div class="qa-desc">Peer-reviewed journals, conference proceedings, and technical reports.</div>
-        <span class="qa-arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a href="#news" class="qa-card" aria-label="Go to News section">
-        <svg class="qa-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <rect x="4" y="8" width="32" height="26" rx="2"/>
-          <line x1="4" y1="16" x2="36" y2="16"/>
-          <line x1="10" y1="22" x2="20" y2="22"/>
-          <line x1="10" y1="28" x2="24" y2="28"/>
-          <circle cx="30" cy="25" r="5" fill="#D97706" stroke="#D97706"/>
-          <line x1="30" y1="22" x2="30" y2="26"/>
-          <circle cx="30" cy="28" r="0.8" fill="#0F172A" stroke="none"/>
-        </svg>
-        <div class="qa-title">Blog & News</div>
-        <div class="qa-desc">Seminars, awards, announcements, and research highlights.</div>
-        <span class="qa-arrow" aria-hidden="true">→</span>
-      </a>
-
+      <div class="collab-item" role="listitem"><div class="collab-logo">BHEL<small>Power Systems</small></div></div>
+      <div class="collab-item" role="listitem"><div class="collab-logo">TATA<small>Power</small></div></div>
+      <div class="collab-item" role="listitem"><div class="collab-logo">IIT<small>Bombay</small></div></div>
+      <div class="collab-item" role="listitem"><div class="collab-logo">DRDO<small>Electronics</small></div></div>
+      <div class="collab-item" role="listitem"><div class="collab-logo">ABB<small>Drives</small></div></div>
+      <div class="collab-item" role="listitem"><div class="collab-logo">SIEMENS<small>Energy</small></div></div>
+      <div class="collab-item" role="listitem"><div class="collab-logo">IITK<small>Power Elec.</small></div></div>
+      <div class="collab-item" role="listitem"><div class="collab-logo">CSIR<small>CEERI</small></div></div>
+      <div class="collab-item" role="listitem"><div class="collab-logo">DST<small>SERB</small></div></div>
+      <div class="collab-item" role="listitem"><div class="collab-logo">NTPC<small>Grid Systems</small></div></div>
     </div>
   </div>
 </section>
@@ -1635,86 +1650,75 @@ footer {
 <footer id="footer" role="contentinfo">
   <div class="container">
     <div class="footer-grid">
+
+      <!-- Brand -->
       <div class="footer-brand">
-        <div class="footer-logo">
-          <svg width="28" height="28" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-            <circle cx="18" cy="18" r="16" stroke="#D97706" stroke-width="1.5" fill="none"/>
-            <circle cx="18" cy="18" r="10" stroke="#D97706" stroke-width="1" fill="none" stroke-dasharray="3 3"/>
-            <circle cx="18" cy="18" r="4" fill="#D97706"/>
-            <line x1="18" y1="2" x2="18" y2="8" stroke="#D97706" stroke-width="1.5"/>
-            <line x1="18" y1="28" x2="18" y2="34" stroke="#D97706" stroke-width="1.5"/>
-            <line x1="2" y1="18" x2="8" y2="18" stroke="#D97706" stroke-width="1.5"/>
-            <line x1="28" y1="18" x2="34" y2="18" stroke="#D97706" stroke-width="1.5"/>
-          </svg>
-          Electrical Machines Laboratory
+        <div class="footer-logo-wrap">
+          <div class="footer-logo-iit">
+            <img
+              src="logo.png"
+              alt="IIT Bhubaneswar"
+              width="32" height="32"
+            >
+          </div>
+          <div class="footer-logo-text">
+            Electrical Machines Laboratory
+            <small>IIT Bhubaneswar</small>
+          </div>
         </div>
-        <p class="footer-tagline">Advancing research in electric machines, drives, energy conversion, and sustainable electrification since 2008.</p>
+        <p class="footer-tagline">Advancing research in electric machines, drives, power electronics, and sustainable electrification — Department of Electrical Engineering, IIT Bhubaneswar.</p>
         <div class="footer-contact">
           <p>
-            Department of Electrical Engineering<br>
-            Institute of Technology, Bhubaneswar<br>
-            Odisha – 751 003, India<br><br>
-            <a href="tel:+916742345678" style="color:#9CA3AF;">+91-674-234-5678</a><br>
-            <a href="mailto:emlabresearch@institute.ac.in" style="color:#9CA3AF;">emlabresearch@institute.ac.in</a>
+            Dept. of Electrical Engineering<br>
+            IIT Bhubaneswar, Argul<br>
+            Odisha – 752 050, India<br>
+            <a href="mailto:ankitdalal@iitbbs.ac.in">ankitdalal@iitbbs.ac.in</a>
           </p>
         </div>
       </div>
 
-      <!-- <div>
+      <!-- Quick Links -->
+      <div>
+        <div class="footer-heading">Navigate</div>
+        <ul class="footer-links" role="list">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="#blogs">Blogs</a></li>
+          <li><a href="#footer">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Research -->
+      <div>
         <div class="footer-heading">Research</div>
         <ul class="footer-links" role="list">
-          <li><a href="#research">Electric Machines Design</a></li>
-          <li><a href="#research">Condition Monitoring</a></li>
-          <li><a href="#research">Motor Drives</a></li>
-          <li><a href="#research">Power Electronics</a></li>
-          <li><a href="#research">Electric Vehicles</a></li>
-          <li><a href="#research">Renewable Energy</a></li>
-        </ul>
-      </div> -->
-
-      <div>
-        <div class="footer-heading">Laboratory</div>
-        <ul class="footer-links" role="list">
-          <li><a href="#highlights">Facilities</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#publications">Publications</a></li>
-          <li><a href="#faculty">Team</a></li>
-          <li><a href="#news">News</a></li>
-          <li><a href="#collaborators">Collaborators</a></li>
+          <li><a href="research.html#domains">Electric Machines</a></li>
+          <li><a href="research.html#domains">Electric Vehicles</a></li>
+          <li><a href="research.html#domains">Motor Control &amp; Drives</a></li>
+          <li><a href="research.html#domains">Power Electronics</a></li>
+          <li><a href="research.html#publications">Publications</a></li>
+          <li><a href="research.html#opportunities">Join the Lab</a></li>
         </ul>
       </div>
 
-      <div>
-        <div class="footer-heading">Resources</div>
-        <ul class="footer-links" role="list">
-          <!-- <li><a href="#">Lab Handbook</a></li>
-          <li><a href="#">Safety Procedures</a></li>
-          <li><a href="#">Equipment Booking</a></li> -->
-          <li><a href="#">M.Tech / Ph.D Openings</a></li>
-          <li><a href="#">Annual Research Reports</a></li>
-          <li><a href="#footer">Contact Us</a></li>
-        </ul>
-      </div>
     </div>
 
     <div class="footer-bottom">
-      <div class="footer-copy">© 2026 Electrical Machines Laboratory. All rights reserved.</div>
+      <div class="footer-copy">© 2026 Electrical Machines Laboratory, IIT Bhubaneswar. All rights reserved.</div>
       <div class="social-icons" aria-label="Social media links">
-        <!-- LinkedIn -->
         <a href="#" aria-label="LinkedIn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <rect x="2" y="2" width="20" height="20" rx="3"/>
             <path d="M7 10v7M7 7v.5M12 17v-4.5c0-1.4 1-2.5 2.5-2.5S17 11.1 17 12.5V17"/>
           </svg>
         </a>
-        <!-- ResearchGate -->
         <a href="#" aria-label="ResearchGate">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/>
             <path d="M8 12h5M8 8h4c1.7 0 3 1.3 3 3s-1.3 3-3 3h-1l3 4"/>
           </svg>
         </a>
-        <!-- Google Scholar -->
         <a href="#" aria-label="Google Scholar">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path d="M5 3l7 5 7-5"/>
@@ -1722,8 +1726,7 @@ footer {
             <circle cx="19" cy="17" r="3"/>
           </svg>
         </a>
-        <!-- Email -->
-        <a href="mailto:emlabresearch@institute.ac.in" aria-label="Email us">
+        <a href="mailto:ankitdalal@iitbbs.ac.in" aria-label="Email us">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <rect x="2" y="4" width="20" height="16" rx="2"/>
             <path d="M2 8l10 7 10-7"/>
@@ -1738,17 +1741,13 @@ footer {
      JAVASCRIPT
 ========================================= -->
 <script>
-// =========================================
-// NAVBAR SCROLL
-// =========================================
+// ---- Navbar scroll ----
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
 
-// =========================================
-// HAMBURGER MENU
-// =========================================
+// ---- Hamburger ----
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 hamburger.addEventListener('click', () => {
@@ -1763,243 +1762,322 @@ mobileMenu.querySelectorAll('a').forEach(a => {
 });
 
 // =========================================
-// MOTOR CANVAS ANIMATION
+// SYNRM MOTOR CANVAS
 // =========================================
-(function() {
+(function () {
   const canvas = document.getElementById('motor-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-
-  // Physical dimensions (canvas is 460×460)
-  const W = 460, H = 460;
+  const W = 580, H = 580;
   canvas.width = W; canvas.height = H;
   const cx = W / 2, cy = H / 2;
 
   // Radii
-  const R_housing    = 218;   // outer housing
-  const R_stator_out = 210;   // outer stator iron
-  const R_stator_in  = 156;   // inner stator bore (air gap outer)
-  const R_airgap     = 148;   // air gap inner (rotor outer)
-  const R_rotor_out  = 143;   // rotor outer
-  const R_rotor_in   = 68;    // inner rotor bore
-  const R_shaft      = 20;    // shaft
-  const R_shaft_hub  = 10;
-
-  // Slot geometry
+  const R_stator_out = 218;
+  const R_stator_in  = 162;
+  const R_airgap     = 154;
+  const R_rotor_out  = 148;
+  const R_shaft      = 22;
   const STATOR_SLOTS = 36;
-  const ROTOR_BARS   = 28;
 
-  // Phase colors
-  const PH_A = '#D97706';   // amber
-  const PH_B = '#60A5FA';   // steel-blue
-  const PH_C = '#94A3B8';   // slate
+  // Part info for tooltips
+  const PART_INFO = {
+    stator:  { title: 'Stator Core',    body: 'Laminated silicon-steel core carrying the three-phase stator winding. Creates the rotating magnetic field that drives the rotor.' },
+    winding: { title: 'Stator Winding', body: 'Three-phase distributed copper winding embedded in stator slots. Carries AC current to produce a rotating MMF wave.' },
+    rotor:   { title: 'Rotor (SynRM)',  body: 'Synchronous Reluctance Rotor — no permanent magnets or conductors. Torque is produced by reluctance difference between d- and q-axes.' },
+    barrier: { title: 'Flux Barriers',  body: 'Air-filled slits cut into the rotor laminations to guide magnetic flux along the high-permeability paths, creating rotor anisotropy.' },
+    airgap:  { title: 'Air Gap',        body: 'The narrow clearance between stator bore and rotor surface. Minimising air gap length maximises magnetic flux linkage and torque density.' },
+    shaft:   { title: 'Shaft',          body: 'Steel shaft transmitting mechanical torque to the load. In SynRM, no electrical connections to the rotor are needed — fully robust.' },
+  };
 
-  // Winding: which slots belong to which phase
-  // 36 slots, 3 phases → 12 slots each, grouped in pairs
-  function slotPhase(i) {
-    const pos = i % 6;
-    if (pos === 0 || pos === 1) return 'A';
-    if (pos === 2 || pos === 3) return 'B';
-    return 'C';
+  let highlightPart = null; // currently highlighted part
+  let rotorAngle = 0;
+  const RPM = 2;
+  const RAD_PER_MS = (RPM / 60) * Math.PI * 2 / 1000;
+  let lastTime = null;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Tooltip elements
+  const tooltip  = document.getElementById('motor-tooltip');
+  const ttTitle  = document.getElementById('tt-title');
+  const ttBody   = document.getElementById('tt-body');
+
+  function showTooltip(part, x, y) {
+    if (!PART_INFO[part]) return;
+    ttTitle.textContent = PART_INFO[part].title;
+    ttBody.textContent  = PART_INFO[part].body;
+    // position tooltip relative to .motor-outer-wrap
+    const wrap = canvas.parentElement;
+    const wrRect = wrap.getBoundingClientRect();
+    const cRect  = canvas.getBoundingClientRect();
+    // canvas coords → wrap-relative
+    const scaleX = cRect.width / W;
+    const scaleY = cRect.height / H;
+    let tx = (cRect.left - wrRect.left) + x * scaleX + 12;
+    let ty = (cRect.top  - wrRect.top)  + y * scaleY - 20;
+    // keep inside wrap
+    const tw = 200, th = 80;
+    if (tx + tw > wrRect.width) tx = tx - tw - 24;
+    if (ty < 0) ty = 0;
+    tooltip.style.left = tx + 'px';
+    tooltip.style.top  = ty + 'px';
+    tooltip.classList.add('visible');
   }
 
-  // ---- DRAWING HELPERS ----
+  function hideTooltip() {
+    tooltip.classList.remove('visible');
+  }
 
-  function drawArc(r, color, lineW, dash) {
+  // Hit-test: what part is at canvas coordinate (x, y)?
+  function hitTest(x, y) {
+    const dx = x - cx, dy = y - cy;
+    const r = Math.sqrt(dx * dx + dy * dy);
+    // angle relative to rotor rotation for barrier test
+    const angle = Math.atan2(dy, dx) - rotorAngle;
+
+    if (r <= R_shaft) return 'shaft';
+    if (r <= R_rotor_out) {
+      // Check if in a barrier slot (simplified: 4 barrier groups per pole, 4 poles)
+      const normAngle = ((angle % (Math.PI / 2)) + Math.PI / 2) % (Math.PI / 2);
+      const barrierAngles = [Math.PI / 8, Math.PI / 4, 3 * Math.PI / 8];
+      for (const ba of barrierAngles) {
+        if (Math.abs(normAngle - ba) < 0.12 && r > R_shaft + 12 && r < R_rotor_out - 8) return 'barrier';
+      }
+      return 'rotor';
+    }
+    if (r <= R_airgap + 8) return 'airgap';
+    if (r <= R_stator_in) return 'airgap';
+    if (r <= R_stator_out) {
+      // Check if near a slot opening (winding)
+      const slotStep = (Math.PI * 2) / STATOR_SLOTS;
+      const normA = ((Math.atan2(dy, dx) % slotStep) + slotStep) % slotStep;
+      if (normA > slotStep * 0.3 && normA < slotStep * 0.7) return 'winding';
+      return 'stator';
+    }
+    return null;
+  }
+
+  // Canvas mouse/touch handlers
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const sx = W / rect.width, sy = H / rect.height;
+    const x = (e.clientX - rect.left) * sx;
+    const y = (e.clientY - rect.top)  * sy;
+    const part = hitTest(x, y);
+    if (part) {
+      highlightPart = part;
+      showTooltip(part, x, y);
+      canvas.style.cursor = 'pointer';
+    } else {
+      highlightPart = null;
+      hideTooltip();
+      canvas.style.cursor = 'default';
+    }
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    highlightPart = null;
+    hideTooltip();
+    canvas.style.cursor = 'default';
+  });
+
+  // Label panel interaction
+  document.querySelectorAll('.motor-label-item').forEach(item => {
+    const activate = () => {
+      document.querySelectorAll('.motor-label-item').forEach(i => {
+        i.classList.remove('active');
+        i.setAttribute('aria-pressed', 'false');
+      });
+      const part = item.dataset.part;
+      if (highlightPart === part) {
+        // toggle off
+        highlightPart = null;
+        hideTooltip();
+      } else {
+        highlightPart = part;
+        item.classList.add('active');
+        item.setAttribute('aria-pressed', 'true');
+        // Show tooltip near canvas centre
+        ttTitle.textContent = PART_INFO[part].title;
+        ttBody.textContent  = PART_INFO[part].body;
+        const wrap = canvas.parentElement;
+        const cRect = canvas.getBoundingClientRect();
+        const wrRect = wrap.getBoundingClientRect();
+        tooltip.style.left = ((cRect.left - wrRect.left) + cRect.width / 2 - 100) + 'px';
+        tooltip.style.top  = ((cRect.top  - wrRect.top)  + 16) + 'px';
+        tooltip.classList.add('visible');
+      }
+    };
+    item.addEventListener('click', activate);
+    item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+  });
+
+  // ---- DRAWING ----
+
+  function drawArc(r, col, lw, dash) {
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = lineW;
+    ctx.strokeStyle = col;
+    ctx.lineWidth = lw;
     if (dash) ctx.setLineDash(dash); else ctx.setLineDash([]);
     ctx.stroke();
     ctx.setLineDash([]);
   }
 
-  function fillCircle(r, color) {
+  function fillCircle(r, col) {
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.fillStyle = color;
+    ctx.fillStyle = col;
     ctx.fill();
   }
 
-  // Radial slot rectangle (slot cut into iron)
-  // angle: slot centre angle in radians
-  // r_start, r_end: radial extent
-  // half_w: half-width in pixels at mid-radius
-  function drawRadialSlot(angle, r_start, r_end, half_w, fillColor, strokeColor) {
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(angle);
-    const slotW = half_w * 2;
-    ctx.beginPath();
-    ctx.rect(-half_w, -(r_end), slotW, r_end - r_start);
-    ctx.fillStyle = fillColor;
-    ctx.fill();
-    if (strokeColor) {
-      ctx.strokeStyle = strokeColor;
-      ctx.lineWidth = 0.4;
-      ctx.stroke();
-    }
-    ctx.restore();
-  }
+  function isHighlighted(part) { return highlightPart === part; }
+  function highlightAlpha(part, base) { return isHighlighted(part) ? Math.min(base * 1.6, 1) : base; }
 
-  // ---- STATOR (static) ----
   function drawStator() {
-    // Housing outer ring
+    const hl = isHighlighted('stator');
+    // Stator iron
     const hg = ctx.createRadialGradient(cx, cy, R_stator_in, cx, cy, R_stator_out);
-    hg.addColorStop(0, '#2D3F55');
-    hg.addColorStop(1, '#1A2535');
+    hg.addColorStop(0, hl ? '#3D5570' : '#2D3F55');
+    hg.addColorStop(1, hl ? '#253548' : '#1A2535');
     fillCircle(R_stator_out, hg);
 
-    // Housing tick marks (mounting flanges)
+    // Mounting flanges
     for (let i = 0; i < 4; i++) {
       const a = (i / 4) * Math.PI * 2 - Math.PI / 4;
       ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(a);
-      ctx.fillStyle = '#334155';
+      ctx.translate(cx, cy); ctx.rotate(a);
+      ctx.fillStyle = hl ? '#4A6A85' : '#334155';
       ctx.beginPath();
-      ctx.roundRect(-7, -(R_stator_out + 16), 14, 16, 3);
+      ctx.roundRect(-8, -(R_stator_out + 18), 16, 18, 3);
       ctx.fill();
-      ctx.strokeStyle = '#475569';
-      ctx.lineWidth = 0.8;
-      ctx.stroke();
+      ctx.strokeStyle = '#475569'; ctx.lineWidth = 0.8; ctx.stroke();
       ctx.restore();
     }
 
-    // Stator outer border
-    drawArc(R_stator_out, '#475569', 1.5);
+    drawArc(R_stator_out, hl ? '#64A0C0' : '#475569', 1.5);
 
-    // --- Stator teeth & slots ---
-    const toothHalfW  = 6;
-    const slotHalfW   = 4.5;
-    const stepAngle   = (Math.PI * 2) / STATOR_SLOTS;
-
-    // First draw all teeth (iron)
+    // Stator teeth
+    const step = (Math.PI * 2) / STATOR_SLOTS;
     for (let i = 0; i < STATOR_SLOTS; i++) {
-      const a = i * stepAngle - Math.PI / 2;
-      drawRadialSlot(a, R_stator_in, R_stator_out - 4, toothHalfW, '#243044', '#334155');
-    }
-
-    // Then draw slot openings (void/dark) between teeth
-    for (let i = 0; i < STATOR_SLOTS; i++) {
-      const a = (i + 0.5) * stepAngle - Math.PI / 2;
-      drawRadialSlot(a, R_stator_in + 4, R_stator_out - 6, slotHalfW, '#0D1929', null);
-    }
-
-    // Winding conductors in slots
-    const windingDepth = 32; // how deep into slot the winding sits
-    const windW = 5;
-    for (let i = 0; i < STATOR_SLOTS; i++) {
-      const a = (i + 0.5) * stepAngle - Math.PI / 2;
-      const ph = slotPhase(i);
-      let col = ph === 'A' ? PH_A : ph === 'B' ? PH_B : PH_C;
-
-      // Outer conductor layer
+      const a = i * step - Math.PI / 2;
       ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(a);
-      ctx.fillStyle = col;
-      ctx.globalAlpha = 0.85;
+      ctx.translate(cx, cy); ctx.rotate(a);
+      ctx.fillStyle = hl ? '#3D5570' : '#243044';
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 0.4;
       ctx.beginPath();
-      ctx.roundRect(-windW / 2, -(R_stator_out - 8), windW, windingDepth * 0.55, 1.5);
+      ctx.rect(-6, -(R_stator_out - 4), 12, R_stator_out - R_stator_in - 4);
+      ctx.fill(); ctx.stroke();
+      ctx.restore();
+    }
+
+    // Slot voids
+    for (let i = 0; i < STATOR_SLOTS; i++) {
+      const a = (i + 0.5) * step - Math.PI / 2;
+      ctx.save();
+      ctx.translate(cx, cy); ctx.rotate(a);
+      ctx.fillStyle = '#0D1929';
+      ctx.beginPath();
+      ctx.rect(-4.5, -(R_stator_out - 6), 9, R_stator_out - R_stator_in - 10);
       ctx.fill();
-      // Inner conductor layer (return path, slightly dimmer)
-      ctx.globalAlpha = 0.45;
+      ctx.restore();
+    }
+
+    // Windings
+    const hlW = isHighlighted('winding');
+    const PH_A = '#D97706', PH_B = '#60A5FA', PH_C = '#94A3B8';
+    for (let i = 0; i < STATOR_SLOTS; i++) {
+      const a = (i + 0.5) * step - Math.PI / 2;
+      const pos = i % 6;
+      const col = pos < 2 ? PH_A : pos < 4 ? PH_B : PH_C;
+      ctx.save();
+      ctx.translate(cx, cy); ctx.rotate(a);
+      ctx.globalAlpha = hlW ? 1.0 : 0.85;
+      ctx.fillStyle = col;
       ctx.beginPath();
-      ctx.roundRect(-windW / 2, -(R_stator_in + windingDepth * 0.45), windW, windingDepth * 0.45, 1.5);
+      ctx.roundRect(-2.5, -(R_stator_out - 8), 5, 18, 1.5);
+      ctx.fill();
+      ctx.globalAlpha = hlW ? 0.7 : 0.45;
+      ctx.beginPath();
+      ctx.roundRect(-2.5, -(R_stator_in + 14), 5, 14, 1.5);
       ctx.fill();
       ctx.globalAlpha = 1;
       ctx.restore();
     }
 
-    // Inner stator bore surface
+    // Bore
     fillCircle(R_stator_in, '#0D1929');
     drawArc(R_stator_in, '#334155', 1);
   }
 
-  // ---- ROTOR (rotates) ----
+  // SynRM rotor with flux barriers (4-pole, 3 barriers per pole)
   function drawRotor(angle) {
+    const hlR = isHighlighted('rotor');
+    const hlB = isHighlighted('barrier');
+
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(angle);
 
-    // Rotor iron body
-    const rg = ctx.createRadialGradient(0, 0, R_rotor_in, 0, 0, R_rotor_out);
+    // Rotor body
+    const rg = ctx.createRadialGradient(0, 0, R_shaft, 0, 0, R_rotor_out);
     rg.addColorStop(0,   '#131F30');
-    rg.addColorStop(0.6, '#1A2D40');
-    rg.addColorStop(1,   '#243044');
+    rg.addColorStop(0.7, hlR ? '#253550' : '#1A2D40');
+    rg.addColorStop(1,   hlR ? '#2D4560' : '#243044');
     ctx.beginPath();
     ctx.arc(0, 0, R_rotor_out, 0, Math.PI * 2);
     ctx.fillStyle = rg;
     ctx.fill();
+    // drawArc(R_rotor_out, hlR ? '#608AB0' : '#334155', 1);
 
-    // Rotor bar slots
-    const barStep = (Math.PI * 2) / ROTOR_BARS;
-    const barHalfW = 3.5;
-    const barDepth = 26;
-    const barR_out = R_rotor_out - 2;
-    const barR_in  = barR_out - barDepth;
+    // 4-pole SynRM flux barriers
+    // Each pole spans 90°; 3 arc-shaped barriers per pole
+    const poles = 4;
+    const polePitch = (Math.PI * 2) / poles;
+    const barriers = [
+      { rInner: R_shaft + 14, rOuter: R_shaft + 32, halfSpan: 0.22 },
+      { rInner: R_shaft + 38, rOuter: R_shaft + 60, halfSpan: 0.30 },
+      { rInner: R_shaft + 66, rOuter: R_shaft + 88, halfSpan: 0.36 },
+    ];
 
-    for (let i = 0; i < ROTOR_BARS; i++) {
-      const a = i * barStep - Math.PI / 2;
-      // Slot void
-      ctx.save();
-      ctx.rotate(a);
-      ctx.fillStyle = '#0D1929';
-      ctx.beginPath();
-      ctx.rect(-barHalfW, -(barR_out), barHalfW * 2, barDepth);
-      ctx.fill();
-      // Copper bar
-      ctx.fillStyle = '#B45309';
-      ctx.globalAlpha = 0.9;
-      ctx.beginPath();
-      ctx.roundRect(-(barHalfW - 0.8), -(barR_out - 1), (barHalfW - 0.8) * 2, barDepth - 4, 1);
-      ctx.fill();
-      ctx.globalAlpha = 1;
-      ctx.restore();
+    for (let p = 0; p < poles; p++) {
+      const poleCenter = p * polePitch;
+      for (const b of barriers) {
+        // q-axis barrier (perpendicular to d-axis)
+        const startA = poleCenter + Math.PI / 4 - b.halfSpan;
+        const endA   = poleCenter + Math.PI / 4 + b.halfSpan;
+
+        ctx.beginPath();
+        ctx.arc(0, 0, b.rOuter, startA, endA);
+        ctx.arc(0, 0, b.rInner, endA, startA, true);
+        ctx.closePath();
+        ctx.fillStyle = hlB ? 'rgba(96,165,250,0.25)' : '#0D1929';
+        ctx.fill();
+        ctx.strokeStyle = hlB ? 'rgba(96,165,250,0.6)' : '#1E293B';
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+      }
     }
 
-    // End rings (squirrel cage) — drawn as thick arcs near top & bottom
+    // Shaft hole
     ctx.beginPath();
-    ctx.arc(0, 0, barR_out - 2, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(180,83,9,0.35)';
-    ctx.lineWidth = 4;
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(0, 0, barR_in + 2, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(180,83,9,0.2)';
-    ctx.lineWidth = 3;
-    ctx.stroke();
-
-    // Rotor inner bore
-    ctx.beginPath();
-    ctx.arc(0, 0, R_rotor_in, 0, Math.PI * 2);
+    ctx.arc(0, 0, R_shaft + 4, 0, Math.PI * 2);
     ctx.fillStyle = '#0D1929';
     ctx.fill();
-    ctx.strokeStyle = '#243044';
-    ctx.lineWidth = 1;
-    ctx.stroke();
+    ctx.strokeStyle = '#243044'; ctx.lineWidth = 1; ctx.stroke();
 
     // Shaft
+    const hlS = isHighlighted('shaft');
     const shG = ctx.createRadialGradient(-4, -4, 1, 0, 0, R_shaft);
-    shG.addColorStop(0, '#4B6080');
-    shG.addColorStop(1, '#1E3050');
+    shG.addColorStop(0, hlS ? '#6A80A0' : '#4B6080');
+    shG.addColorStop(1, hlS ? '#2E4870' : '#1E3050');
     ctx.beginPath();
     ctx.arc(0, 0, R_shaft, 0, Math.PI * 2);
     ctx.fillStyle = shG;
     ctx.fill();
-    ctx.strokeStyle = '#334155';
-    ctx.lineWidth = 1;
-    ctx.stroke();
+    ctx.strokeStyle = hlS ? '#8AACE0' : '#334155'; ctx.lineWidth = 1; ctx.stroke();
 
-    // Shaft hub
-    ctx.beginPath();
-    ctx.arc(0, 0, R_shaft_hub, 0, Math.PI * 2);
-    ctx.fillStyle = '#2C4060';
-    ctx.fill();
-
-    // Key slot on shaft
+    // Key slot
     ctx.fillStyle = '#0D1929';
     ctx.beginPath();
     ctx.roundRect(-2.5, -(R_shaft + 2), 5, 9, 1);
@@ -2014,86 +2092,97 @@ mobileMenu.querySelectorAll('a').forEach(a => {
     ctx.restore();
   }
 
-  // ---- AIR GAP (static, drawn over rotor) ----
   function drawAirGap() {
-    // Thin air gap region
-    drawArc(R_airgap, '#0D1929', 2.5);
-    drawArc(R_stator_in - 1, '#1E293B', 1);
-    // Dashed field-line hint
-    drawArc((R_stator_in + R_airgap) / 2, 'rgba(100,160,220,0.12)', 1, [3, 5]);
+    const hl = isHighlighted('airgap');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R_airgap + 4, 0, Math.PI * 2);
+    ctx.strokeStyle = '#0D1929'; ctx.lineWidth = 3; ctx.stroke();
+    // Dashed hint
+    ctx.beginPath();
+    ctx.arc(cx, cy, (R_stator_in + R_airgap) / 2, 0, Math.PI * 2);
+    ctx.strokeStyle = hl ? 'rgba(96,165,250,0.5)' : 'rgba(100,160,220,0.12)';
+    ctx.lineWidth = hl ? 2 : 1;
+    ctx.setLineDash([3, 5]);
+    ctx.stroke();
+    ctx.setLineDash([]);
   }
 
-  // ---- ANNOTATIONS (static) ----
-  function drawAnnotations() {
+  // External annotations (outside the motor circle)
+  function drawExternalAnnotations() {
+    const outerR = R_stator_out + 22;
+    const annotR = R_stator_out + 58;
     ctx.font = '10px Inter, sans-serif';
-    ctx.fillStyle = '#64748B';
-
-    // Stator label
-    const sa = -Math.PI * 0.18;
-    const sx = cx + Math.cos(sa) * (R_stator_out + 14);
-    const sy = cy + Math.sin(sa) * (R_stator_out + 14);
-    ctx.fillText('Stator', sx - 18, sy);
-    ctx.beginPath();
-    ctx.moveTo(sx - 6, sy - 3);
-    ctx.lineTo(cx + Math.cos(sa) * (R_stator_out + 2), cy + Math.sin(sa) * (R_stator_out + 2));
-    ctx.strokeStyle = '#475569';
     ctx.lineWidth = 0.7;
-    ctx.stroke();
 
-    // Rotor label
-    const ra = Math.PI * 0.15;
-    const rx = cx + Math.cos(ra) * (R_rotor_in - 18);
-    const ry = cy + Math.sin(ra) * (R_rotor_in - 18);
-    ctx.fillText('Rotor', rx - 14, ry);
+    const labels = [
+      { angle: -Math.PI * 0.70, part: 'stator',  text: 'Stator', col: '#64748B' },
+      { angle: -Math.PI * 0.10, part: 'winding', text: 'Winding', col: '#D97706' },
+      { angle:  Math.PI * 0.20, part: 'airgap',  text: 'Air gap', col: '#60A5FA' },
+      { angle:  Math.PI * 0.55, part: 'rotor',   text: 'Rotor', col: '#64748B' },
+      { angle:  Math.PI * 0.80, part: 'barrier',  text: 'Flux barrier', col: '#94A3B8' },
+      { angle: -Math.PI * 0.80, part: 'shaft',   text: 'Shaft', col: '#4B6080' },
+    ];
 
-    // Air gap label
-    ctx.fillText('Air gap', 16, cy - 8);
-    ctx.beginPath();
-    ctx.moveTo(68, cy - 6);
-    ctx.lineTo(cx - R_airgap + 4, cy);
-    ctx.strokeStyle = '#475569';
-    ctx.lineWidth = 0.7;
-    ctx.stroke();
+    labels.forEach(({ angle, part, text, col }) => {
+      const hl = isHighlighted(part);
+      const lineCol  = hl ? '#D97706' : 'rgba(71,85,105,0.45)';
+      const textCol  = hl ? '#D97706' : col;
+      const x0 = cx + Math.cos(angle) * outerR;
+      const y0 = cy + Math.sin(angle) * outerR;
+      const x1 = cx + Math.cos(angle) * annotR;
+      const y1 = cy + Math.sin(angle) * annotR;
 
-    // Phase legend bottom-right
-    const lx = W - 80, ly = H - 64;
-    const phases = [{ col: PH_A, label: 'Ph A' }, { col: PH_B, label: 'Ph B' }, { col: PH_C, label: 'Ph C' }];
-    phases.forEach((p, i) => {
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.strokeStyle = lineCol;
+      ctx.stroke();
+
+      ctx.fillStyle = textCol;
+      ctx.font = hl ? 'bold 10px Inter, sans-serif' : '10px Inter, sans-serif';
+      const tw = ctx.measureText(text).width;
+      const tx = x1 + (Math.cos(angle) > 0 ? 4 : -tw - 4);
+      const ty = y1 + 4;
+      ctx.fillText(text, tx, ty);
+    });
+
+    // Legend bottom-right, well outside motor
+    const lx = W - 86, ly = H - 56;
+    ctx.font = '9px Inter, sans-serif';
+    [
+      { col: '#D97706', label: 'Ph A' },
+      { col: '#60A5FA', label: 'Ph B' },
+      { col: '#94A3B8', label: 'Ph C' },
+    ].forEach((p, i) => {
       ctx.fillStyle = p.col;
-      ctx.globalAlpha = i === 1 ? 0.75 : i === 2 ? 0.65 : 1;
       ctx.beginPath();
       ctx.roundRect(lx, ly + i * 16, 9, 9, 1.5);
       ctx.fill();
-      ctx.globalAlpha = 1;
       ctx.fillStyle = '#64748B';
-      ctx.font = '9px Inter, sans-serif';
       ctx.fillText(p.label, lx + 13, ly + i * 16 + 8);
     });
+
+    // "SynRM" label above motor
+    ctx.font = 'bold 11px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(203,213,225,0.5)';
+    const tag = 'Synchronous Reluctance Motor';
+    ctx.fillText(tag, cx - ctx.measureText(tag).width / 2, 18);
   }
 
   // ---- ANIMATION LOOP ----
-  let rotorAngle = 0;
-  const RPM = 2;                         // 2 rpm → 1 rev per 30s
-  const RAD_PER_MS = (RPM / 60) * Math.PI * 2 / 1000;
-  let lastTime = null;
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   function frame(ts) {
     if (!lastTime) lastTime = ts;
     const dt = ts - lastTime;
     lastTime = ts;
-
-    if (!prefersReducedMotion) rotorAngle += RAD_PER_MS * dt;
+    if (!prefersReduced) rotorAngle += RAD_PER_MS * dt;
 
     ctx.clearRect(0, 0, W, H);
     drawStator();
     drawRotor(rotorAngle);
     drawAirGap();
-    drawAnnotations();
-
+    // drawExternalAnnotations();
     requestAnimationFrame(frame);
   }
-
   requestAnimationFrame(frame);
 })();
 
@@ -2101,36 +2190,33 @@ mobileMenu.querySelectorAll('a').forEach(a => {
 // COUNTUP ANIMATION
 // =========================================
 function animateCounters() {
-  const counters = document.querySelectorAll('.highlight-number[data-target]');
-  counters.forEach(el => {
+  document.querySelectorAll('.highlight-number[data-target]').forEach(el => {
     const target = +el.dataset.target;
     const suffix = el.dataset.suffix || '';
-    const duration = 2000;
-    const startTime = performance.now();
-    function update(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * target) + suffix;
-      if (progress < 1) requestAnimationFrame(update);
+    const dur = 2000, t0 = performance.now();
+    function tick(t) {
+      const p = Math.min((t - t0) / dur, 1);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(e * target) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
     }
-    requestAnimationFrame(update);
+    requestAnimationFrame(tick);
   });
 }
-const highlightsSection = document.getElementById('highlights');
 let counted = false;
-const counterObs = new IntersectionObserver((entries) => {
+const counterObs = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting && !counted) { counted = true; animateCounters(); }
   });
 }, { threshold: 0.3 });
-counterObs.observe(highlightsSection);
+const hl = document.getElementById('highlights');
+if (hl) counterObs.observe(hl);
 
 // =========================================
 // SCROLL REVEAL
 // =========================================
-const revealEls = document.querySelectorAll('.research-card, .highlight-card, .project-card, .news-item, .qa-card, .collab-item');
-const revealObs = new IntersectionObserver((entries) => {
+const revealEls = document.querySelectorAll('.research-card, .highlight-card, .project-card, .news-item, .collab-item');
+const revealObs = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.style.opacity = '1';
